@@ -9,70 +9,115 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-	/* Global Styles & Smooth Scrolling */
+        /* Global Styles & Smooth Scrolling */
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #f8f9fa; /* Friendly off-white background */
-            color: #333333; /* Dark gray text for readability */
+            background-color: #f8f9fa; 
+            color: #333333; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; 
             padding: 0; 
             line-height: 1.6; 
             display: flex; 
+            overflow-x: hidden;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON (BULLETPROOF)        */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            position: fixed;
+            top: 30px;
+            right: 35px;
+            z-index: 1002; 
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger .bar {
+            width: 100%;
+            height: 4px;
+            background-color: #5de0e6;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: left center;
+        }
+
+        /* Hamburger to X Animation */
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
         
         /* ----------------------------------- */
-        /* NEW SIDEBAR NAVIGATION              */
+        /* SIDEBAR NAVIGATION                  */
         /* ----------------------------------- */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 250px;
+            width: 280px;
             height: 100vh;
-            background-color: #0a192f; /* Solid Navy Blue */
-            border-right: 2px solid transparent;
-            border-image: #0a192f;
+            background-color: #0a192f; 
+            border-right: 2px solid #5de0e6;
             display: flex;
             flex-direction: column;
             z-index: 1000;
+            transform: translateX(-100%); 
+            transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+            overflow-y: auto;
         }
 
-        .sidebar-brand {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(93, 224, 230, 0.2);
-            letter-spacing: 1px;
+        .sidebar.active { 
+            transform: translateX(0); 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8); 
         }
+
+        .sidebar-brand { font-size: 2rem; font-weight: 900; color: #ffffff; text-align: center; padding: 40px 20px 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(93, 224, 230, 0.2); letter-spacing: 1px; }
         .sidebar-brand span { color: #5de0e6; }
+        .sidebar a { color: #d0d0d0; text-decoration: none; padding: 18px 40px; font-weight: 700; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover { color: #5de0e6; background-color: rgba(93, 224, 230, 0.05); border-left: 4px solid #5de0e6; padding-left: 45px; }
 
-        .sidebar a {
-            color: #d0d0d0;
-            text-decoration: none;
-            padding: 15px 30px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: block;
-            border-left: 4px solid transparent; /* Prep for hover effect */
-        }
-
-        .sidebar a:hover {
-            color: #5de0e6;
-            background-color: rgba(93, 224, 230, 0.05);
-            border-left: 4px solid #5de0e6;
-            padding-left: 35px; /* Slight indent shift on hover */
-        }
-
-/* ----------------------------------- */
+        /* ----------------------------------- */
         /* MAIN CONTENT WRAPPER                */
         /* ----------------------------------- */
-        .main-content { margin-left: 250px; width: calc(100% - 250px); }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; }
+        .main-content { 
+            margin-left: 0; 
+            width: 100%; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
         
         /* Hero Section & ALIGNED TITLE FIX */
         .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
@@ -84,9 +129,6 @@
 
         .sub-heading { color: #0a192f; font-size: 1.8rem; font-weight: 900; border-bottom: 2px solid #5de0e6; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; margin-top: 20px;}
         
-        .btn { display: inline-block; background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; padding: 15px 35px; margin: 0 10px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; }
-        .btn:hover { background: linear-gradient(90deg, #5de0e6, #004aad); transform: translateY(-3px); color: #ffffff; }
-        
         /* Section Headings */
         .section-heading { 
             font-size: 2rem; 
@@ -95,7 +137,7 @@
             padding-bottom: 10px; 
             margin-bottom: 40px; 
             margin-top: 60px; 
-            color: #0a192f; /* Navy text for headings so they show on white */
+            color: #0a192f; 
             font-weight: 900; 
         }
 
@@ -114,21 +156,45 @@
         .carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; background-color: transparent; border: 2px solid #5de0e6; cursor: pointer; transition: all 0.3s ease; }
         .dot.active { background-color: #5de0e6; box-shadow: 0 0 10px rgba(93, 224, 230, 0.6); }
-	
-	/* Mobile Responsiveness for Sidebar */
+
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer {
+            text-align: center;
+            padding: 25px 20px 20px;
+            width: 100%;
+            color: #888888;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(93, 224, 230, 0.1);
+            box-sizing: border-box;
+            margin-top: auto; 
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 850px) {
-            body { flex-direction: column; }
-            .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; padding-bottom: 20px; }
-            .main-content { margin-left: 0; width: 100%; }
-            .sidebar a { text-align: center; padding: 10px 0; border-left: none; }
-            .sidebar a:hover { border-left: none; padding-left: 0; background-color: transparent; }
+            .container { padding: 30px 20px 60px; }
+            .hero-title-wrapper .main-title { font-size: 2rem; }
+            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
+            .hero-title-wrapper .separator { display: none; }
+            .review-quote { font-size: 1rem; padding: 0 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- New Dashboard Sidebar -->
-    <div class="sidebar">
+    <!-- Dark Overlay Background -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Hamburger Icon -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <!-- Dashboard Sidebar -->
+    <div class="sidebar" id="sidebar">
         <!-- Logo Area -->
         <div class="sidebar-brand">Jakie<span>.</span></div>
         
@@ -141,7 +207,7 @@
         <a href="contact.html">Contact</a>
     </div>
 
-<!-- Main Content Wrapper -->
+    <!-- Main Content Wrapper -->
     <div class="main-content">
 
         <!-- Sub-page Hero Section with Perfect Alignment -->
@@ -155,114 +221,140 @@
 
         <div class="container">
         
-        <h2 class="section-heading">Management Reviews</h2>
-        
-        <div class="carousel-container">
-            <div class="carousel-track" id="track">
+            <h2 class="section-heading">Management Reviews</h2>
+            
+            <div class="carousel-container">
+                <div class="carousel-track" id="track">
 
-                <!-- Slide 1 (2024 Line Manager) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "Jae has been great help to the IT Team. From helpdesk calls to task outside his comfort zone. I see Jae has matured over time and understands the business needs. going the extra mile when needed... Thank you for your help over the year and helping contribute to a good IT KPI score."
+                    <!-- Slide 1 (2024 Line Manager) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "Jae has been great help to the IT Team. From helpdesk calls to task outside his comfort zone. I see Jae has matured over time and understands the business needs. going the extra mile when needed... Thank you for your help over the year and helping contribute to a good IT KPI score."
+                        </div>
+                        <div class="review-author">
+                            Line Manager
+                            <span class="review-title">2024 Appraisal</span>
+                        </div>
                     </div>
-                    <div class="review-author">
-                        Line Manager
-                        <span class="review-title">2024 Appraisal</span>
-                    </div>
-                </div>
 
-                <!-- Slide 2 (2024 Head of IT) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "A good year's work... this will help to promote his presence within the Group and as a valued member the IT Team."
+                    <!-- Slide 2 (2024 Head of IT) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "A good year's work... this will help to promote his presence within the Group and as a valued member the IT Team."
+                        </div>
+                        <div class="review-author">
+                            Head of IT
+                            <span class="review-title">2024 Appraisal</span>
+                        </div>
                     </div>
-                    <div class="review-author">
-                        Head of IT
-                        <span class="review-title">2024 Appraisal</span>
-                    </div>
-                </div>
 
-                <!-- Slide 3 (2023 Line Manager) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "It's been a very busy year and Jae has helped the team delivery its Goals and Support Users with dignity and respect. Well done on passing the Foundation Cybersecurity course."
+                    <!-- Slide 3 (2023 Line Manager) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "It's been a very busy year and Jae has helped the team delivery its Goals and Support Users with dignity and respect. Well done on passing the Foundation Cybersecurity course."
+                        </div>
+                        <div class="review-author">
+                            Line Manager
+                            <span class="review-title">2023 Appraisal</span>
+                        </div>
                     </div>
-                    <div class="review-author">
-                        Line Manager
-                        <span class="review-title">2023 Appraisal</span>
-                    </div>
-                </div>
 
-                <!-- Slide 4 (2023 Head of IT) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "Jakie makes a significant contribution to the team and the Pioneer Group, dealing first and second line IT Support requests... I would like to see Jakie progress and fulfil his potential."
+                    <!-- Slide 4 (2023 Head of IT) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "Jakie makes a significant contribution to the team and the Pioneer Group, dealing first and second line IT Support requests... I would like to see Jakie progress and fulfil his potential."
+                        </div>
+                        <div class="review-author">
+                            Head of IT
+                            <span class="review-title">2023 Appraisal</span>
+                        </div>
                     </div>
-                    <div class="review-author">
-                        Head of IT
-                        <span class="review-title">2023 Appraisal</span>
+                    
+                    <!-- Slide 5 (2022 Line Manager) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "I am happy with Jae performance. He is a hard worker and a team player. Having Jae has helped deliver a better IT Helpdesk."
+                        </div>
+                        <div class="review-author">
+                            Line Manager
+                            <span class="review-title">2022 Appraisal</span>
+                        </div>
                     </div>
+
+                    <!-- Slide 6 (2022 Head of IT) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "I am extremely pleased with Jakie's work he is proving to be a real asset to the IT Team. I hope he can continue to work for The Pioneer Group as he makes a real contribution to the IT Team and the wider group."
+                        </div>
+                        <div class="review-author">
+                            Head of IT
+                            <span class="review-title">2022 Appraisal</span>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7 (2021 Line Manager) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "Jae has been an integral member of the team. In his 1st month, he resolved our intranet issues even which would have cost us £2k to resolve. Has worked outside work hours to help the team and time keeping has been excellent. Always a team player. Keep up the good work"
+                        </div>
+                        <div class="review-author">
+                            Line Manager
+                            <span class="review-title">2021 Appraisal</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 8 (2021 Head of IT) -->
+                    <div class="carousel-slide">
+                        <div class="review-quote">
+                            "Jae has made a solid start during his time as a trainee within the Pioneer Group's IT Team. He has settled in really well and adapted to a new way of supporting our remote\agile work force very quickly. He has taken responsibility for the 1st line support calls and has dealt with these in an efficient manner. When Jae cannot resolve issues at the first point of contact he is proactive in asking for advice or researching a solution."
+                        </div>
+                        <div class="review-author">
+                            Head of IT
+                            <span class="review-title">2021 Appraisal</span>
+                        </div>
+                    </div>
+
                 </div>
                 
-                <!-- Slide 5 (2022 Line Manager) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "I am happy with Jae performance. He is a hard worker and a team player. Having Jae has helped deliver a better IT Helpdesk."
-                    </div>
-                    <div class="review-author">
-                        Line Manager
-                        <span class="review-title">2022 Appraisal</span>
-                    </div>
+                <!-- Carousel Buttons -->
+                <div class="carousel-controls">
+                    <button class="control-btn" onclick="moveSlide(-1)">❮ Previous</button>
+                    <button class="control-btn" onclick="moveSlide(1)">Next ❯</button>
                 </div>
 
-                <!-- Slide 6 (2022 Head of IT) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "I am extremely pleased with Jakie's work he is proving to be a real asset to the IT Team. I hope he can continue to work for The Pioneer Group as he makes a real contribution to the IT Team and the wider group."
-                    </div>
-                    <div class="review-author">
-                        Head of IT
-                        <span class="review-title">2022 Appraisal</span>
-                    </div>
-                </div>
-
-                <!-- Slide 7 (2021 Line Manager) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "Jae has been an integral member of the team. In his 1st month, he resolved our intranet issues even which would have cost us £2k to resolve. Has worked outside work hours to help the team and time keeping has been excellent. Always a team player. Keep up the good work"
-                    </div>
-                    <div class="review-author">
-                        Line Manager
-                        <span class="review-title">2021 Appraisal</span>
-                    </div>
+                <!-- Indicator Dots -->
+                <div class="carousel-dots" id="dots-container">
+                    <!-- JavaScript will inject the dots here -->
                 </div>
                 
-                <!-- Slide 8 (2021 Head of IT) -->
-                <div class="carousel-slide">
-                    <div class="review-quote">
-                        "Jae has made a solid start during his time as a trainee within the Pioneer Group's IT Team. He has settled in really well and adapted to a new way of supporting our remote\agile work force very quickly. He has taken responsibility for the 1st line support calls and has dealt with these in an efficient manner. When Jae cannot resolve issues at the first point of contact he is proactive in asking for advice or researching a solution."
-                    </div>
-                    <div class="review-author">
-                        Head of IT
-                        <span class="review-title">2021 Appraisal</span>
-                    </div>
-                </div>
-
             </div>
-            
-            <!-- Carousel Buttons -->
-            <div class="carousel-controls">
-                <button class="control-btn" onclick="moveSlide(-1)">❮ Previous</button>
-                <button class="control-btn" onclick="moveSlide(1)">Next ❯</button>
-            </div>
-
-            <!-- Indicator Dots -->
-            <div class="carousel-dots" id="dots-container">
-                <!-- JavaScript will inject the dots here -->
-            </div>
-            
         </div>
-    </div>
+
+        <footer class="site-footer">
+            <p>Built with <span style="color: #5de0e6; font-size: 1.1rem;">♥</span> by Jakie & Gemini</p>
+        </footer>
+
+    </div> <!-- End of Main Content -->
+
+    <!-- JavaScript for Mobile Menu & Overlay -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        // Function to toggle everything at once
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Open/Close when clicking the hamburger
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close when clicking the dark background overlay
+        overlay.addEventListener('click', toggleMenu);
+    </script>
 
     <!-- JavaScript for Carousel & Dots -->
     <script>
@@ -320,5 +412,6 @@
             updateDots();
         }
     </script>
+
 </body>
 </html>

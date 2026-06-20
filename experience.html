@@ -19,6 +19,62 @@
             padding: 0; 
             line-height: 1.6; 
             display: flex; 
+            overflow-x: hidden;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON (BULLETPROOF)        */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            position: fixed;
+            top: 30px;
+            right: 35px;
+            z-index: 1002; 
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger .bar {
+            width: 100%;
+            height: 4px;
+            background-color: #5de0e6;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            transform-origin: left center;
+        }
+
+        /* Hamburger to X Animation */
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
         
         /* ----------------------------------- */
@@ -28,51 +84,40 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 250px;
+            width: 280px;
             height: 100vh;
             background-color: #0a192f; 
-            border-right: 2px solid transparent;
-            border-image: #0a192f;
+            border-right: 2px solid #5de0e6;
             display: flex;
             flex-direction: column;
             z-index: 1000;
+            transform: translateX(-100%); 
+            transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+            overflow-y: auto;
         }
 
-        .sidebar-brand {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(93, 224, 230, 0.2);
-            letter-spacing: 1px;
+        .sidebar.active { 
+            transform: translateX(0); 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8); 
         }
+
+        .sidebar-brand { font-size: 2rem; font-weight: 900; color: #ffffff; text-align: center; padding: 40px 20px 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(93, 224, 230, 0.2); letter-spacing: 1px; }
         .sidebar-brand span { color: #5de0e6; }
-
-        .sidebar a {
-            color: #d0d0d0;
-            text-decoration: none;
-            padding: 15px 30px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: block;
-            border-left: 4px solid transparent; 
-        }
-
-        .sidebar a:hover {
-            color: #5de0e6;
-            background-color: rgba(93, 224, 230, 0.05);
-            border-left: 4px solid #5de0e6;
-            padding-left: 35px; 
-        }
+        .sidebar a { color: #d0d0d0; text-decoration: none; padding: 18px 40px; font-weight: 700; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover { color: #5de0e6; background-color: rgba(93, 224, 230, 0.05); border-left: 4px solid #5de0e6; padding-left: 45px; }
 
         /* ----------------------------------- */
         /* MAIN CONTENT WRAPPER                */
         /* ----------------------------------- */
-        .main-content { margin-left: 250px; width: calc(100% - 250px); }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; }
+        .main-content { 
+            margin-left: 0; 
+            width: 100%; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; }
         
         /* Hero Section & ALIGNED TITLE FIX */
         .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
@@ -81,8 +126,6 @@
         .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
         .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
         .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
-
-        .sub-heading { color: #0a192f; font-size: 1.8rem; font-weight: 900; border-bottom: 2px solid #5de0e6; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; margin-top: 20px;}
 
         /* ----------------------------------- */
         /* NEW BOX LAYOUT STYLES               */
@@ -116,7 +159,7 @@
         .project-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-            gap: 30px; /* This creates the breathable white space */
+            gap: 30px; 
         }
         
         /* Individual Project Boxes */
@@ -130,7 +173,7 @@
         }
         .project-card:hover { 
             border-top-color: #5de0e6; 
-            transform: translateY(-5px); /* Slight lift effect on hover */
+            transform: translateY(-5px); 
         }
         .project-card h4 { 
             color: #5de0e6; 
@@ -144,21 +187,44 @@
         .project-card li { margin-bottom: 15px; padding-left: 20px; position: relative; line-height: 1.5; }
         .project-card li::before { content: '▪'; color: #004aad; position: absolute; left: 0; font-size: 1.2rem; line-height: 1.2;}
 
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer {
+            text-align: center;
+            padding: 25px 20px 20px;
+            width: 100%;
+            color: #888888;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(93, 224, 230, 0.1);
+            box-sizing: border-box;
+            margin-top: auto; 
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 850px) {
-            body { flex-direction: column; }
-            .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; padding-bottom: 20px; }
-            .main-content { margin-left: 0; width: 100%; }
-            .sidebar a { text-align: center; padding: 10px 0; border-left: none; }
-            .sidebar a:hover { border-left: none; padding-left: 0; background-color: transparent; }
+            .container { padding: 30px 20px 60px; }
+            .hero-title-wrapper .main-title { font-size: 2rem; }
+            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
+            .hero-title-wrapper .separator { display: none; }
             .project-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Dark Overlay Background -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Hamburger Icon -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
     <!-- Dashboard Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <!-- Logo Area -->
         <div class="sidebar-brand">Jakie<span>.</span></div>
         
@@ -171,7 +237,7 @@
         <a href="contact.html">Contact</a>
     </div>
 
-<!-- Main Content Wrapper -->
+    <!-- Main Content Wrapper -->
     <div class="main-content">
 
         <!-- Sub-page Hero Section with Perfect Alignment -->
@@ -206,7 +272,7 @@
                         <li>Migrated on-premise data to the M365 cloud utilizing AD Connect and PowerShell scripting.</li>
                         <li>Applied advanced device configurations and compliance policies via Microsoft Intune and ME MDM.</li>
                         <li>Configured the new Microsoft-hosted self-service portal, successfully decommissioning legacy systems.</li>
-			<li>Enhanced network security by recommending and deploying a gateway server to secure remote endpoints.</li>
+                        <li>Enhanced network security by recommending and deploying a gateway server to secure remote endpoints.</li>
                     </ul>
                 </div>
 
@@ -236,14 +302,39 @@
                         <li>Gathered in-depth knowledge of Azure architecture, successfully integrating critical data across Sophos Mobile, Manage Engine, and custom applications.</li>
                         <li>Designed a new user-based ticket process that significantly simplified resolution paths and slashed response times for locked accounts.</li>
                         <li>Led automation initiatives to intercept common user queries with self-service solutions prior to ticket submission.</li>
-			<li>Sourced and implemented the 'Gorilla' new starter IT training solution, conducting introductory helpdesk functions for the Team.</li>
+                        <li>Sourced and implemented the 'Gorilla' new starter IT training solution, conducting introductory helpdesk functions for the Team.</li>
                     </ul>
                 </div>
 
             </div> <!-- End of Project Grid -->
 
         </div>
+
+        <footer class="site-footer">
+            <p>Built with <span style="color: #5de0e6; font-size: 1.1rem;">♥</span> by Jakie & Gemini</p>
+        </footer>
+
     </div>
+
+    <!-- JavaScript for Mobile Menu & Overlay -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        // Function to toggle everything at once
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Open/Close when clicking the hamburger
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close when clicking the dark background overlay
+        overlay.addEventListener('click', toggleMenu);
+    </script>
 
 </body>
 </html>

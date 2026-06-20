@@ -21,32 +21,6 @@
             display: flex; 
         }
         
-	/* ----------------------------------- */
-        /* HAMBURGER ICON (MOBILE ONLY)        */
-        /* ----------------------------------- */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 1001; /* Stays above the sidebar */
-        }
-        .bar {
-            display: block;
-            width: 30px;
-            height: 4px;
-            margin: 6px auto;
-            background-color: #5de0e6;
-            transition: all 0.3s ease-in-out;
-            border-radius: 2px;
-        }
-
-        /* Hamburger to X Animation */
-        .hamburger.active .bar:nth-child(2) { opacity: 0; }
-        .hamburger.active .bar:nth-child(1) { transform: translateY(10px) rotate(45deg); }
-        .hamburger.active .bar:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
-
         /* ----------------------------------- */
         /* SIDEBAR NAVIGATION                  */
         /* ----------------------------------- */
@@ -156,16 +130,23 @@
             .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.5); } /* Slides it back in */
             .main-content { margin-left: 0; width: 100%; padding: 20px; }
         }
+	
+	/* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer {
+            text-align: center;
+            padding: 25px 20px 20px;
+            margin-top: auto; /* Pushes the footer to the absolute bottom of the page */
+            width: 100%;
+            color: #888888;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(93, 224, 230, 0.1);
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
-
-    <!-- Hamburger Icon -->
-    <div class="hamburger" id="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </div>
 
     <!-- Dashboard Sidebar -->
     <div class="sidebar">
@@ -195,6 +176,11 @@
 	    <!-- Links to our new verification page instead of the direct PDF -->
             <a href="download-cv.html" class="btn">Download CV</a>
         </div>
+
+	<footer class="site-footer">
+            <p>Built with <span style="color: #5de0e6; font-size: 1.1rem;">♥</span> by Jakie & Gemini</p>
+        </footer>
+
     </div>
         </div>
 

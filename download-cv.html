@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download CV | Jakie-Jae Woolley</title>
+    
+    <link rel="icon" type="image/png" href="Assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { background-color: #f8f9fa; color: #333333; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; line-height: 1.6; display: flex; align-items: center; justify-content: center; min-height: 100vh; flex-direction: column;}
+        
+        .verification-card {
+            background: #0a192f;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border-top: 4px solid #5de0e6;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        .verification-card h2 { color: #ffffff; margin-top: 0; font-weight: 900; letter-spacing: 1px;}
+        .verification-card p { color: #d0d0d0; margin-bottom: 25px; font-size: 1rem; }
+
+        /* Question Styles */
+        .question-box {
+            background: rgba(15, 21, 35, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(93, 224, 230, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .question-text { color: #5de0e6; font-weight: 700; font-size: 1.1rem; margin-bottom: 15px; display: block; }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #004aad;
+            background: #101728;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus { border-color: #5de0e6; box-shadow: 0 0 10px rgba(93, 224, 230, 0.2); }
+
+        #errorMessage { color: #ff6b6b; font-size: 0.9rem; font-weight: 700; margin-top: 10px; display: none; }
+
+        /* Button Styles */
+        .btn { display: inline-block; padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; text-align: center; cursor: pointer; width: 100%; box-sizing: border-box;}
+        
+        .btn-verify { background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; }
+        .btn-verify:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(93, 224, 230, 0.4); }
+
+        /* This is the final download button, hidden initially */
+        .btn-download { background: transparent; border: 2px solid #5de0e6; color: #5de0e6; margin-top: 20px; }
+        .btn-download:hover { background: rgba(93, 224, 230, 0.1); transform: translateY(-3px); }
+
+        .back-link { display: block; margin-top: 25px; color: #5de0e6; text-decoration: none; font-weight: 700; }
+        .back-link:hover { text-decoration: underline; }
+        
+        /* Success State */
+        .success-state { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="verification-card" id="cardContainer">
+        
+        <div id="verificationPhase">
+            <h2>Security Check</h2>
+            <p>To prevent automated bots from scraping personal data, please answer the IT security question below.</p>
+
+            <div class="question-box">
+                <label class="question-text" for="securityAnswer">What port is standard for secure web traffic (HTTPS)?</label>
+                <input type="text" id="securityAnswer" placeholder="Enter port number..." autocomplete="off">
+                <div id="errorMessage">Incorrect port. Please try again.</div>
+            </div>
+
+            <button class="btn btn-verify" onclick="checkAnswer()">Verify Human</button>
+        </div>
+
+        <div id="successPhase" class="success-state">
+            <h2>Verification Complete</h2>
+            <p style="color: #5de0e6; font-weight: 700;">Access Granted.</p>
+            <p>Thank you. You may now securely download the CV.</p>
+            <div id="downloadContainer"></div> </div>
+
+    </div>
+    
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+    <script>
+        function checkAnswer() {
+            const input = document.getElementById('securityAnswer').value.trim();
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // The correct answer is 443
+            if (input === "443") {
+                // Hide the question phase
+                document.getElementById('verificationPhase').style.display = 'none';
+                
+                // Show the success phase
+                document.getElementById('successPhase').style.display = 'block';
+                
+                // Dynamically create the download link ONLY when verified
+                // This stops simple bots from finding the link in the HTML
+                const downloadLink = document.createElement('a');
+                downloadLink.href = "Assets/Jakie_Woolley_CV.pdf";
+                downloadLink.download = "Jakie_Woolley_CV.pdf";
+                downloadLink.className = "btn btn-download";
+                downloadLink.innerText = "Download PDF";
+                
+                document.getElementById('downloadContainer').appendChild(downloadLink);
+            } else {
+                // Show error, clear input
+                errorMsg.style.display = 'block';
+                document.getElementById('securityAnswer').value = '';
+            }
+        }
+
+        // Allow pressing "Enter" to submit
+        document.getElementById("securityAnswer").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkAnswer();
+            }
+        });
+    </script>
+
+</body>
+</html>

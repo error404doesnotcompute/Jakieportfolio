@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/favicon.png">
+    <title>Contact | Jakie-Jae Woolley</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+	/* Global Styles & Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #f8f9fa; /* Friendly off-white background */
+            color: #333333; /* Dark gray text for readability */
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            display: flex; 
+        }
+        
+        /* ----------------------------------- */
+        /* NEW SIDEBAR NAVIGATION              */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #0a192f; /* Solid Navy Blue */
+            border-right: 2px solid transparent;
+            border-image: #0a192f;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(93, 224, 230, 0.2);
+            letter-spacing: 1px;
+        }
+        .sidebar-brand span { color: #5de0e6; }
+
+        .sidebar a {
+            color: #d0d0d0;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: block;
+            border-left: 4px solid transparent; /* Prep for hover effect */
+        }
+
+        .sidebar a:hover {
+            color: #5de0e6;
+            background-color: rgba(93, 224, 230, 0.05);
+            border-left: 4px solid #5de0e6;
+            padding-left: 35px; /* Slight indent shift on hover */
+        }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content { margin-left: 250px; width: calc(100% - 250px); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; }
+        
+        /* Hero Section & ALIGNED TITLE FIX */
+        .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
+        
+        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
+
+        .sub-heading { color: #0a192f; font-size: 1.8rem; font-weight: 900; border-bottom: 2px solid #5de0e6; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; margin-top: 20px;}
+        
+        .btn { display: inline-block; background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; padding: 15px 35px; margin: 0 10px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn:hover { background: linear-gradient(90deg, #5de0e6, #004aad); transform: translateY(-3px); color: #ffffff; }
+        
+        /* Button Styles */
+        .btn { display: inline-block; background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; padding: 15px 35px; margin: 0 10px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn:hover { background: linear-gradient(90deg, #5de0e6, #004aad); transform: translateY(-3px); color: #ffffff; }
+
+        /* Contact Form Styles */
+        .contact-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; margin-top: 40px; }
+        
+        .contact-box { background: #0a192f; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6; width: 100%; max-width: 700px; box-sizing: border-box; }
+        
+        .contact-intro { text-align: center; color: #e0e0e0; margin-bottom: 30px; font-size: 1.1rem; }
+        
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+        .contact-form input, .contact-form textarea { background: #101728; border: 1px solid #e0e0e0; color: #ffffff; padding: 15px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem; outline: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #5de0e6; box-shadow: 0 0 10px rgba(93, 224, 230, 0.4); }
+        .contact-form button { width: 100%; margin: 0; margin-top: 10px; }
+
+        .alt-contact { text-align: center; padding-top: 20px; border-top: 1px solid rgba(93, 224, 230, 0.2); width: 100%; max-width: 700px; }
+        .alt-contact p { color: #aaaaaa; margin-bottom: 20px; }
+
+	/* Mobile Responsiveness for Sidebar */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; padding-bottom: 20px; }
+            .main-content { margin-left: 0; width: 100%; }
+            .sidebar a { text-align: center; padding: 10px 0; border-left: none; }
+            .sidebar a:hover { border-left: none; padding-left: 0; background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- New Dashboard Sidebar -->
+    <div class="sidebar">
+        <!-- Logo Area -->
+        <div class="sidebar-brand">Jakie<span>.</span></div>
+        
+        <!-- Navigation Links -->
+        <a href="index.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="tech-stack.html">Tech Stack</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+<!-- Main Content Wrapper -->
+    <div class="main-content">
+
+        <!-- Sub-page Hero Section with Perfect Alignment -->
+        <div class="hero">
+            <div class="hero-title-wrapper">
+                <span class="main-title">Get In Touch</span>
+                <span class="separator">|</span>
+                <span class="sub-title">Let's discuss your next IT opportunity</span>
+            </div>
+        </div>
+
+        <div class="container">
+        
+        <div class="contact-wrapper">
+            
+            <div class="contact-box">
+                <p class="contact-intro">Currently open to new opportunities. Whether you are reaching out regarding an onsite IT Support role in Central Birmingham, a remote infrastructure position, or just want to connect, feel free to drop me a message below.</p>
+                
+                <!-- Formspree Integration -->
+                <form action="https://formspree.io/f/xwvjdzpk" method="POST" class="contact-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email Address" required>
+                    <input type="text" name="company" placeholder="Company / Recruitment Agency (Optional)">
+                    <textarea name="message" rows="6" placeholder="How can I help you?" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="alt-contact">
+                <p>Prefer to connect on social media?</p>
+                <a href="http://www.linkedin.com/in/jakiewoolley" target="_blank" class="btn">View LinkedIn Profile</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

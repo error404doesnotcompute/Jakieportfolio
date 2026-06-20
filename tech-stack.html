@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/favicon.png">
+    <title>Technical Stack | Jakie-Jae Woolley</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+	/* Global Styles & Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #f8f9fa; /* Friendly off-white background */
+            color: #333333; /* Dark gray text for readability */
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            display: flex; 
+        }
+        
+        /* ----------------------------------- */
+        /* NEW SIDEBAR NAVIGATION              */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #0a192f; /* Solid Navy Blue */
+            border-right: 2px solid transparent;
+            border-image: #0a192f;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(93, 224, 230, 0.2);
+            letter-spacing: 1px;
+        }
+        .sidebar-brand span { color: #5de0e6; }
+
+        .sidebar a {
+            color: #d0d0d0;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: block;
+            border-left: 4px solid transparent; /* Prep for hover effect */
+        }
+
+        .sidebar a:hover {
+            color: #5de0e6;
+            background-color: rgba(93, 224, 230, 0.05);
+            border-left: 4px solid #5de0e6;
+            padding-left: 35px; /* Slight indent shift on hover */
+        }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content { margin-left: 250px; width: calc(100% - 250px); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; }
+        
+        /* Hero Section & ALIGNED TITLE FIX */
+        .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
+        
+        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
+
+        .sub-heading { color: #0a192f; font-size: 1.8rem; font-weight: 900; border-bottom: 2px solid #5de0e6; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; margin-top: 20px;}
+        
+        .btn { display: inline-block; background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; padding: 15px 35px; margin: 0 10px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn:hover { background: linear-gradient(90deg, #5de0e6, #004aad); transform: translateY(-3px); color: #ffffff; }
+        
+        /* Section Headings */
+        .section-heading { 
+            font-size: 2rem; 
+            border-bottom: 2px solid transparent; 
+            border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; 
+            padding-bottom: 10px; 
+            margin-bottom: 40px; 
+            margin-top: 60px; 
+            color: #0a192f; /* Navy text for headings so they show on white */
+            font-weight: 900; 
+        }
+
+        /* Tech Stack Layout */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px; }
+        @media (max-width: 600px) { .tech-grid { grid-template-columns: 1fr; } }
+        
+        .tech-card { background: #0a192f; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-top: 4px solid #5de0e6; }
+        .tech-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: #ffffff; display: flex; align-items: center; gap: 10px; }
+        .tech-card p { color: #aaaaaa; font-size: 0.95rem; margin-bottom: 15px; font-style: italic; }
+        
+        .tech-list { list-style: none; padding: 0; margin: 0; color: #d0d0d0; }
+        .tech-list li { margin-bottom: 12px; padding-left: 20px; position: relative; line-height: 1.5; }
+        .tech-list li::before { content: '▹'; color: #5de0e6; position: absolute; left: 0; font-weight: bold; }
+        
+        .highlight { color: #5de0e6; font-weight: 700; }
+
+	/* Mobile Responsiveness for Sidebar */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; padding-bottom: 20px; }
+            .main-content { margin-left: 0; width: 100%; }
+            .sidebar a { text-align: center; padding: 10px 0; border-left: none; }
+            .sidebar a:hover { border-left: none; padding-left: 0; background-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- New Dashboard Sidebar -->
+    <div class="sidebar">
+        <!-- Logo Area -->
+        <div class="sidebar-brand">Jakie<span>.</span></div>
+        
+        <!-- Navigation Links -->
+        <a href="index.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="tech-stack.html">Tech Stack</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+
+        <!-- Sub-page Hero Section with Perfect Alignment -->
+        <div class="hero">
+            <div class="hero-title-wrapper">
+                <span class="main-title">Technical Stack</span>
+                <span class="separator">|</span>
+                <span class="sub-title">Systems, Infrastructure & Core Competencies</span>
+            </div>
+        </div>
+
+        <div class="container">
+        
+        <p style="text-align: center; color: #333333; font-size: 1.1rem; margin-bottom: 50px;">A comprehensive breakdown of the enterprise technologies, platforms, and hardware managed during first, second, and third-line support operations.</p>
+
+        <div class="tech-grid">
+            
+            <!-- Cloud & Modern Workplace -->
+            <div class="tech-card">
+                <h3>Cloud & Identity Management</h3>
+                <p>Architecting and administrating modern workplace environments.</p>
+                <ul class="tech-list">
+                    <li><span class="highlight">Microsoft 365 & Entra ID:</span> Full tenant administration, user lifecycle management, and M365 cloud migrations.</li>
+                    <li><span class="highlight">Azure Integration:</span> Syncing on-premise infrastructure with Azure AD via AD Connect.</li>
+		    <li><span class="highlight">Role-Based Access Control (RBAC):</span> Managing network user access to systems and data, ensuring permissions align strictly with user roles.</li>
+                    <li><span class="highlight">Exchange Online:</span> Mailbox management, routing configurations, and security policies.</li>
+		    <li><span class="highlight">Exchange Administration:</span> Managing and administering MS Exchange 2016.</li>
+                    <li><span class="highlight">SharePoint Administration:</span> End-to-end development, deployment, and permission management for large-scale corporate intranets.</li>
+                </ul>
+            </div>
+
+            <!-- Device & Endpoint Management -->
+            <div class="tech-card" style="border-top-color: #004aad;">
+                <h3>Endpoint & Mobile Device Management</h3>
+                <p>Securing, configuring, and deploying hardware at scale.</p>
+                <ul class="tech-list">
+                    <li><span class="highlight">Microsoft Intune:</span> Autopilot deployments, configuration profiles, and compliance policy enforcement across Windows devices.</li>
+                    <li><span class="highlight">Manage Engine (ME MDM):</span> Mobile device provisioning and security enforcement.</li>
+		    <li><span class="highlight">Patch Management:</span> Distributing critical PC updates correctly and in a timely manner across the network.</li>
+                    <li><span class="highlight">Sophos Mobile:</span> Integration of mobile threat defense and remote data wipe capabilities.</li>
+                    <li><span class="highlight">Hardware Provisioning:</span> Imaging, deployment, and secure decommissioning of corporate laptops and desktop terminals.</li>
+		    <li><span class="highlight">Hardware Lifecycle:</span> Executing regular IT PC and system upgrades, alongside secure decommissioning of equipment.</li>
+                </ul>
+            </div>
+
+            <!-- Infrastructure & Security -->
+            <div class="tech-card">
+                <h3>Network Security & Infrastructure</h3>
+                <p>Maintaining secure perimeters and legacy system integration.</p>
+                <ul class="tech-list">
+                    <li><span class="highlight">Sophos XG Firewall:</span> Monitoring and managing perimeter defenses.</li>
+                    <li><span class="highlight">Microsoft Defender:</span> Endpoint threat detection, quarantine management, and vulnerability mitigation.</li>
+		    <li><span class="highlight">Governance & Compliance:</span> Enforcing Information Security policies and monitoring compliance with Data Protection regulations across information management.</li>
+		    <li><span class="highlight">Network Implementations:</span> Assisting in domain upgrades and executing network change implementations to optimize infrastructure.</li>
+                    <li><span class="highlight">Windows Server & Active Directory:</span> On-premise AD administration, Group Policy Objects (GPO), and DHCP/DNS troubleshooting.</li>
+                    <li><span class="highlight">Virtualization:</span> Familiarity with managing instances within VMware and legacy Citrix ecosystems.</li>
+                </ul>
+            </div>
+
+            <!-- Service Management & Tooling -->
+            <div class="tech-card" style="border-top-color: #004aad;">
+                <h3>IT Service Management (ITSM)</h3>
+                <p>Driving helpdesk efficiency through automation and SLA adherence.</p>
+                <ul class="tech-list">
+                    <li><span class="highlight">Zoho SDP & Manage Engine:</span> Ticket triage, incident management, and automated workflow routing.</li>
+		    <li><span class="highlight">Backup & Disaster Recovery:</span> Experience and knowledge of managing Rubrik data security platforms.</li>
+		    <li><span class="highlight">Trend Analysis & Reporting:</span> Generating usage reports and identifying common trends from the IT Helpdesk to develop proactive support strategies.</li>
+                    <li><span class="highlight">Print Infrastructure:</span> Managing enterprise print environments, specifically Xeretec/YSoft Print Solutions and complex profile configuration.</li>
+                    <li><span class="highlight">Scripting & Diagnostics:</span> Utilizing CMD and basic PowerShell to expedite diagnostics and automate repetitive technical tasks.</li>
+                    <li><span class="highlight">Knowledge Management:</span> Developing and progressing "self-help" tutorials of standard operating procedures (SOPs) using Canva and Scribe.</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

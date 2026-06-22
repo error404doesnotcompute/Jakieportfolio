@@ -12,7 +12,7 @@
         /* Global Styles & Smooth Scrolling */
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #f8f9fa; 
+            background-color: #0f1523; 
             color: #333333; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; 
@@ -117,15 +117,15 @@
             min-height: 100vh; 
         }
         
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
         
-        /* Hero Section & ALIGNED TITLE FIX */
-        .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 40px; background: #0a192f; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
         
         .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
         .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
         .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
-        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #5de0e6; line-height: 1; padding-top: 4px; }
 
         .sub-heading { color: #0a192f; font-size: 1.8rem; font-weight: 900; border-bottom: 2px solid #5de0e6; padding-bottom: 10px; margin-bottom: 30px; display: inline-block; margin-top: 20px;}
         
@@ -137,17 +137,17 @@
             padding-bottom: 10px; 
             margin-bottom: 40px; 
             margin-top: 60px; 
-            color: #0a192f; 
+            color: #ffffff; 
             font-weight: 900; 
         }
 
         /* Credly Badges Styles */
         .badge-showcase { display: flex; justify-content: center; gap: 30px; margin-bottom: 60px; flex-wrap: wrap; }
-        .credly-wrapper { background: #d0d0d0; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border: 2px solid transparent; border-image: linear-gradient(135deg, #5de0e6, #004aad) 1; display: flex; justify-content: center; align-items: center; min-width: 200px; min-height: 200px; transition: transform 0.3s ease; }
+        .credly-wrapper { background: linear-gradient(135deg, #0f1523, #004aad); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border: 2px solid transparent; border-image: linear-gradient(135deg, #5de0e6, #004aad) 1; display: flex; justify-content: center; align-items: center; min-width: 200px; min-height: 200px; transition: transform 0.3s ease; }
         .credly-wrapper:hover { transform: translateY(-5px); }
 
         /* Roadmap Styles */
-        .roadmap-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 50px; background: #101728; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6;}
+        .roadmap-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 50px; background: linear-gradient(135deg, #0f1523, #004aad); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6;}
         .roadmap-container a { text-decoration: none !important; color: inherit !important; }
         .roadmap-item { display: flex; align-items: center; background: #0a192f; padding: 15px 20px; border-radius: 8px; border: 1px solid rgba(93, 224, 230, 0.3); transition: transform 0.2s ease; }
         .roadmap-item:hover { transform: translateX(5px); border-color: #5de0e6; }
@@ -157,7 +157,7 @@
 
         /* Education & Certs Grid */
         .edu-flex { display: flex; flex-wrap: wrap; gap: 20px; }
-        .edu-item { flex: 1 1 calc(50% - 20px); background: #0a192f; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6; }
+        .edu-item { flex: 1 1 calc(50% - 20px); background: linear-gradient(135deg, #0f1523, #004aad); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6; }
         .edu-item h3 { margin-bottom: 5px; color: #ffffff; font-size: 1.3rem; }
         .edu-item .date { color: #5de0e6; font-style: italic; margin-bottom: 15px; font-size: 0.95rem; }
         .edu-item ul { list-style: none; padding: 0; color: #d0d0d0; }

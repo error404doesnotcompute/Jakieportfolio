@@ -12,7 +12,7 @@
         /* Global Styles & Smooth Scrolling */
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #f8f9fa; 
+            background-color: #0f1523; 
             color: #333333; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; 
@@ -117,15 +117,15 @@
             min-height: 100vh; 
         }
         
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
         
-        /* Hero Section & ALIGNED TITLE FIX */
-        .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 40px; background: #0a192f; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
         
         .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
         .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
         .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
-        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #5de0e6; line-height: 1; padding-top: 4px; }
 
         /* Button Styles */
         .btn { display: inline-block; background: linear-gradient(90deg, #004aad, #5de0e6); color: #101728; padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; text-align: center; }
@@ -134,14 +134,40 @@
         /* Contact Form Styles */
         .contact-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; margin-top: 20px; }
         
-        .contact-box { background: #0a192f; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6; width: 100%; max-width: 700px; box-sizing: border-box; }
+        .contact-box { background: linear-gradient(135deg, #0f1523, #004aad); padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border-left: 4px solid #5de0e6; width: 100%; max-width: 700px; box-sizing: border-box; }
         
         .contact-intro { text-align: center; color: #e0e0e0; margin-bottom: 30px; font-size: 1.1rem; }
         
         .contact-form { display: flex; flex-direction: column; gap: 20px; }
-        .contact-form input, .contact-form textarea { background: #101728; border: 1px solid #004aad; color: #ffffff; padding: 15px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem; outline: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box; }
+        .contact-form input, .contact-form textarea { background: #ffffff; border: 1px solid #004aad; color: #ffffff; padding: 15px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem; outline: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box; }
         .contact-form input:focus, .contact-form textarea:focus { border-color: #5de0e6; box-shadow: 0 0 10px rgba(93, 224, 230, 0.2); }
         .contact-form button { width: 100%; margin: 0; margin-top: 10px; }
+
+        /* Security CAPTCHA Box */
+        .security-box {
+            background: rgba(15, 21, 35, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(93, 224, 230, 0.3);
+            text-align: left;
+        }
+        
+        .security-box label {
+            display: block;
+            color: #5de0e6;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        #contactError {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
 
         .alt-contact { text-align: center; padding-top: 20px; border-top: 1px solid rgba(93, 224, 230, 0.2); width: 100%; max-width: 700px; }
         .alt-contact p { color: #aaaaaa; margin-bottom: 20px; }
@@ -204,7 +230,7 @@
             <div class="hero-title-wrapper">
                 <span class="main-title">Get In Touch</span>
                 <span class="separator">|</span>
-                <span class="sub-title">Let's discuss your next IT opportunity</span>
+                <span class="sub-title">Let's discuss our next IT opportunity</span>
             </div>
         </div>
 
@@ -213,14 +239,22 @@
             <div class="contact-wrapper">
                 
                 <div class="contact-box">
-                    <p class="contact-intro">Currently open to new opportunities. Whether you are reaching out regarding an onsite IT Support role in Central Birmingham, a remote infrastructure position, or just want to connect, feel free to drop me a message below.</p>
+                    <p class="contact-intro">Currently open to new opportunities. Whether you are reaching out regarding an onsite IT Support role in Central Birmingham, a remote position, or just want to connect, feel free to drop me a message.</p>
                     
                     <!-- Formspree Integration -->
-                    <form action="https://formspree.io/f/xwvjdzpk" method="POST" class="contact-form">
+                    <form action="https://formspree.io/f/xwvjdzpk" method="POST" class="contact-form" id="contactForm">
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email Address" required>
                         <input type="text" name="company" placeholder="Company / Recruitment Agency (Optional)">
                         <textarea name="message" rows="6" placeholder="How can I help you?" required></textarea>
+                        
+                        <!-- IT Security CAPTCHA -->
+                        <div class="security-box">
+                            <label for="securityAnswer">Security Check: What is the standard port for Remote Desktop Protocol (RDP)?</label>
+                            <input type="text" id="securityAnswer" name="security-check" placeholder="Enter port number..." required autocomplete="off">
+                            <div id="contactError">Incorrect port. Please try again to submit.</div>
+                        </div>
+
                         <button type="submit" class="btn">Send Message</button>
                     </form>
                 </div>
@@ -258,6 +292,34 @@
 
         // Close when clicking the dark background overlay
         overlay.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- JavaScript for Form Security Validation -->
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const securityInput = document.getElementById('securityAnswer');
+        const contactError = document.getElementById('contactError');
+
+        contactForm.addEventListener('submit', function(event) {
+            // Prevent the form from submitting instantly
+            event.preventDefault();
+            
+            // Get the user's answer and strip out any accidental blank spaces
+            const answer = securityInput.value.trim();
+            
+            // Check if the answer is exactly 3389
+            if (answer === "3389") {
+                contactError.style.display = 'none';
+                
+                // If correct, programmatically submit the form to Formspree
+                contactForm.submit();
+            } else {
+                // If incorrect, show the red error text, clear the box, and make them try again
+                contactError.style.display = 'block';
+                securityInput.value = '';
+                securityInput.focus();
+            }
+        });
     </script>
 
 </body>

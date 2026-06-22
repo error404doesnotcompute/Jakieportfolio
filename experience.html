@@ -12,7 +12,7 @@
         /* Global Styles & Smooth Scrolling */
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #f8f9fa; 
+            background-color: #0f1523; 
             color: #333333; 
             font-family: 'Poppins', sans-serif; 
             margin: 0; 
@@ -117,15 +117,15 @@
             min-height: 100vh; 
         }
         
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
         
-        /* Hero Section & ALIGNED TITLE FIX */
-        .hero { text-align: center; padding: 50px 20px 40px; background: #0f1523; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 40px; background: #0a192f; border-bottom: 4px solid; border-image: linear-gradient(90deg, #5de0e6, #004aad) 1; }
         
         .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
         .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #ffffff; line-height: 1; padding-top: 4px; }
         .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
-        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #ffffff; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #5de0e6; line-height: 1; padding-top: 4px; }
 
         /* ----------------------------------- */
         /* NEW BOX LAYOUT STYLES               */
@@ -133,22 +133,22 @@
         
         /* Main Role Box */
         .role-card {
-            background: #0a192f;
+            background: linear-gradient(135deg, #0f1523, #004aad);
             padding: 35px;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             margin-bottom: 50px;
             border-top: 4px solid #5de0e6;
         }
-        .role-card h3 { font-size: 1.8rem; margin-top: 0; margin-bottom: 5px; color: #ffffff; font-weight: 500; }
+        .role-card h3 { font-size: 1.8rem; margin-top: 0; margin-bottom: 5px; color: #ffffff; font-weight: 600; }
         .role-card .date { color: #5de0e6; font-size: 1rem; font-style: italic; margin-bottom: 20px; }
         .role-card p { color: #e0e0e0; margin: 0; font-size: 1.05rem; }
 
         /* Out-of-box Heading */
         .sub-heading {
-            color: #0a192f;
+            color: #ffffff;
             font-size: 1.8rem;
-            font-weight: 900;
+            font-weight: 600;
             border-bottom: 2px solid #5de0e6;
             padding-bottom: 10px;
             margin-bottom: 30px;
@@ -164,7 +164,7 @@
         
         /* Individual Project Boxes */
         .project-card { 
-            background: #0a192f; 
+            background: linear-gradient(135deg, #0f1523, #004aad); 
             padding: 35px; 
             border-radius: 12px; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -245,7 +245,7 @@
             <div class="hero-title-wrapper">
                 <span class="main-title">Professional Experience</span>
                 <span class="separator">|</span>
-                <span class="sub-title">Track Record & Technical Case Studies</span>
+                <span class="sub-title">Track Record</span>
             </div>
         </div>
 
@@ -259,7 +259,7 @@
             </div>
 
             <!-- Out-of-box Heading -->
-            <h2 class="sub-heading">Key Projects & Case Studies</h2>
+            <h2 class="sub-heading">Key Projects</h2>
 
             <!-- 2x2 Grid Layout -->
             <div class="project-grid">
@@ -278,7 +278,7 @@
 
                 <!-- Box 2 -->
                 <div class="project-card">
-                    <h4>Project Leadership: SharePoint Intranet</h4>
+                    <h4>Sharepoint & Collaboration</h4>
                     <ul>
                         <li>Independently developed and deployed a company-wide SharePoint Intranet to centralize internal communications.</li>
                         <li>Built out the architecture to support over 150 active users across multiple departments.</li>

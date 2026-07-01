@@ -9,52 +9,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* Global Styles & Smooth Scrolling */
+        /* Global Styles & Oceanic Palette */
         html { scroll-behavior: smooth; }
         body { 
-            /* Dual-Tone Canva-style Background */
             background-color: #0b0d14;
             background-image: 
-                radial-gradient(circle at top left, rgba(93, 224, 230, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
-            color: #ffffff; 
+                radial-gradient(circle at top left, rgba(88, 216, 228, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(52, 157, 204, 0.12) 0%, transparent 40%);
+            color: #d0d0d0; 
             font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            line-height: 1.6; 
-            display: flex; 
-            overflow-x: hidden;
-            min-height: 100vh;
+            margin: 0; padding: 0; line-height: 1.6; display: flex; overflow-x: hidden; min-height: 100vh;
         }
 
         /* ----------------------------------- */
-        /* HAMBURGER ICON (BULLETPROOF)        */
+        /* HAMBURGER ICON                      */
         /* ----------------------------------- */
         .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 35px;
-            height: 25px;
-            cursor: pointer;
-            position: fixed;
-            top: 30px;
-            right: 35px;
-            z-index: 1002; 
-            background: none;
-            border: none;
-            padding: 0;
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 35px; height: 25px; cursor: pointer; position: fixed;
+            top: 30px; right: 35px; z-index: 1002; background: none; border: none; padding: 0;
         }
-
         .hamburger .bar {
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #5de0e6, #a855f7);
-            border-radius: 10px;
-            transition: all 0.3s ease-in-out;
-            transform-origin: left center;
+            width: 100%; height: 4px; background: linear-gradient(90deg, #58D8E4, #349DCC);
+            border-radius: 10px; transition: all 0.3s ease-in-out; transform-origin: left center;
         }
-
         .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
         .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
         .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
@@ -63,206 +41,222 @@
         /* BACKGROUND OVERLAY                  */
         /* ----------------------------------- */
         .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(11, 13, 20, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease-in-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(5px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out;
         }
-
         .menu-overlay.active { opacity: 1; visibility: visible; }
         
         /* ----------------------------------- */
         /* SIDEBAR NAVIGATION                  */
         /* ----------------------------------- */
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            background-color: #0b0d14; 
-            border-right: 2px solid rgba(168, 85, 247, 0.3);
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
-            transform: translateX(-100%); 
-            transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-color: #0b0d14; border-right: 2px solid rgba(52, 157, 204, 0.3);
+            display: flex; flex-direction: column; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
         }
-
         .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.9); }
 
-        .sidebar-brand { font-size: 2rem; font-weight: 900; color: #ffffff; text-align: center; padding: 40px 20px 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(93, 224, 230, 0.1); letter-spacing: 1px; }
-        .sidebar-brand span { background: linear-gradient(90deg, #5de0e6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .sidebar a { color: #94a3b8; text-decoration: none; padding: 18px 40px; font-weight: 700; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
-        .sidebar a:hover, .sidebar a.active-link { color: #5de0e6; background-color: rgba(93, 224, 230, 0.05); border-left: 4px solid #5de0e6; padding-left: 45px; }
+        .sidebar-brand { 
+            text-align: center; padding: 40px 20px 20px; margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(88, 216, 228, 0.1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .brand-logo { max-width: 70px; height: auto; margin-bottom: 15px; }
+        .brand-text { font-size: 1.4rem; font-weight: 600; color: #EBF5F9; letter-spacing: 1px; }
+        .brand-text span { color: #58D8E4; }
+
+        .sidebar a { color: #7FB2DA; text-decoration: none; padding: 18px 40px; font-weight: 400; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover, .sidebar a.active-link { color: #58D8E4; background-color: rgba(88, 216, 228, 0.05); border-left: 4px solid #58D8E4; padding-left: 45px; }
 
         /* ----------------------------------- */
         /* MAIN CONTENT WRAPPER                */
         /* ----------------------------------- */
-        .main-content { 
-            margin-left: 0; 
-            width: 100%; 
+        .main-content {
+            margin-left: 0; width: 100%; display: flex; flex-direction: column;
+            align-items: center; box-sizing: border-box; position: relative;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 80px 40px; width: 100%; box-sizing: border-box; flex-grow: 1; }
+
+        .section-heading { color: #EBF5F9; font-size: 2.2rem; font-weight: 600; margin-bottom: 10px; text-align: left; }
+        .section-sub { color: #7FB2DA; font-size: 1.1rem; margin-bottom: 40px; }
+
+        /* ----------------------------------- */
+        /* TABBED DASHBOARD UI                 */
+        /* ----------------------------------- */
+        .dashboard-ui {
             display: flex;
-            flex-direction: column;
-            min-height: 100vh; 
-        }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
-        
-        /* Hero Section */
-        .hero { text-align: center; padding: 50px 20px 40px; }
-        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
-        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 900; color: #ffffff; line-height: 1; padding-top: 4px; }
-        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #ffffff; line-height: 1; }
-        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #5de0e6; line-height: 1; padding-top: 4px; }
-
-        /* ----------------------------------- */
-        /* BENTO GRID LAYOUT                   */
-        /* ----------------------------------- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 80px 40px 80px; width: 100%; box-sizing: border-box; }
-        
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .review-card {
+            gap: 30px;
             background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05); 
-            border-radius: 20px;
-            padding: 35px;
+            border-radius: 24px; padding: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
         }
-        .review-card:hover { transform: translateY(-5px); border-color: rgba(93, 224, 230, 0.4); }
 
-        .review-quote { font-style: italic; color: #d0d0d0; margin-bottom: 25px; line-height: 1.7; font-size: 1rem; }
-        .review-author { color: #ffffff; font-weight: 700; font-size: 1.1rem; }
-        .review-author span { color: #a855f7; display: block; font-size: 0.9rem; font-weight: 500; margin-top: 5px; }
+        /* Left Side: The Year Tabs */
+        .tabs-column { display: flex; flex-direction: column; gap: 10px; width: 150px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.05); padding-right: 20px;}
+        
+        .tab-btn {
+            background: transparent; color: #7FB2DA; border: none; text-align: left; padding: 15px 20px;
+            font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700; border-radius: 12px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .tab-btn:hover { background: rgba(88, 216, 228, 0.05); color: #58D8E4; }
+        .tab-btn.active {
+            background: linear-gradient(90deg, #349DCC, #58D8E4);
+            color: #0b0d14; box-shadow: 0 5px 15px rgba(88, 216, 228, 0.3);
+        }
 
-        .section-heading { color: #ffffff; font-size: 2rem; font-weight: 900; margin-bottom: 40px; text-align: center; }
+        /* Right Side: The Reviews */
+        .content-column { flex-grow: 1; position: relative; min-height: 400px; }
+        
+        .tab-content {
+            display: none; animation: fadeIn 0.4s ease-in-out;
+            flex-direction: column; gap: 20px;
+        }
+        .tab-content.active { display: flex; }
 
-	/* ----------------------------------- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Individual Review Cards */
+        .review-card {
+            background: rgba(11, 13, 20, 0.6); border: 1px solid rgba(88, 216, 228, 0.2); 
+            border-left: 4px solid #58D8E4; border-radius: 16px; padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .review-card.secondary {
+            background: rgba(11, 13, 20, 0.6); border: 1px solid rgba(88, 216, 228, 0.2); 
+            border-left: 4px solid #58D8E4; border-radius: 16px; padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-quote { font-style: italic; color: #EBF5F9; margin-bottom: 20px; line-height: 1.7; font-size: 1.05rem; }
+        .review-author { color: #58D8E4; font-weight: 700; font-size: 1.1rem; }
+        .secondary .review-author { color: #58D8E4; font-weight: 700; font-size: 1.1rem; }
+        .review-author span { color: #7FB2DA; display: block; font-size: 0.85rem; font-weight: 500; margin-top: 3px; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* ----------------------------------- */
         /* FOOTER STYLES                       */
         /* ----------------------------------- */
-        .site-footer {
-            text-align: center;
-            padding: 25px 20px 20px;
-            width: 100%;
-            color: #555555;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            box-sizing: border-box;
-            margin-top: auto; 
-        }
+        .site-footer { text-align: center; padding: 25px 20px 20px; width: 100%; color: #7FB2DA; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); box-sizing: border-box; margin-top: auto; }
 
         /* Mobile Responsiveness */
-        @media (max-width: 850px) {
-            .container { padding: 30px 20px 60px; }
-            .hero-title-wrapper .main-title { font-size: 2rem; }
-            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
-            .hero-title-wrapper .separator { display: none; }
-            .contact-box { padding: 35px 25px; }
+        @media (max-width: 900px) {
+            .dashboard-ui { flex-direction: column; }
+            .tabs-column { width: 100%; flex-direction: row; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-right: 0; padding-bottom: 20px; overflow-x: auto; }
+            .tab-btn { text-align: center; flex: 1; min-width: 80px;}
+            .container { padding: 80px 20px 40px; }
+            .section-heading { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dark Overlay Background -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- Hamburger Icon -->
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
     </button>
 
-    <!-- Dashboard Sidebar -->
     <div class="sidebar" id="sidebar">
-        <!-- Logo Area -->
-        <div class="sidebar-brand">Jakie<span>.</span></div>
-        
-        <!-- Navigation Links -->
+        <!-- New Custom Logo & Branding -->
+        <div class="sidebar-brand">
+            <!-- Ensure your logo is named logo.png in the Assets folder -->
+            <img src="Assets/logo.png" alt="Jakie Logo" class="brand-logo">
+            <div class="brand-text">Jakie<span>.</span></div>
+        </div>
         <a href="index.html">About</a>
-        <a href="tech-profile.html">Technical Profile</a>
+        <a href="technical-profile.html">Technical Profile</a>
         <a href="qualifications.html">Qualifications</a>
         <a href="appraisals.html" class="active-link">Appraisals</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <!-- Main Content Wrapper -->
     <div class="main-content">
-
-        <!-- Sub-page Hero Section -->
-        <div class="hero">
-            <div class="hero-title-wrapper">
-                <span class="main-title">Professional Appraisals</span>
-                <span class="separator">|</span>
-                <span class="sub-title">Feedback & Professional Milestones</span>
-            </div>
-        </div>
-
         <div class="container">
             
-            <div class="bento-grid">
-                <!-- 2024 -->
-                <div class="review-card">
-                    <p class="review-quote">"Jae has been great help to the IT Team. From helpdesk calls to tasks outside his comfort zone. I see Jae has matured over time and understands the business needs. Going the extra mile when needed... Thank you for your help over the year and helping contribute to a good IT KPI score."</p>
-                    <div class="review-author">Line Manager <span>2024 Appraisal</span></div>
+            <h1 class="section-heading">Professional Appraisals</h1>
+            <p class="section-sub">Select a year to view performance feedback and management reviews.</p>
+            
+            <div class="dashboard-ui">
+                
+                <!-- The Year Tabs -->
+                <div class="tabs-column">
+                    <button class="tab-btn active" onclick="openTab(event, 'y2024')">2024</button>
+                    <button class="tab-btn" onclick="openTab(event, 'y2023')">2023</button>
+                    <button class="tab-btn" onclick="openTab(event, 'y2022')">2022</button>
+                    <button class="tab-btn" onclick="openTab(event, 'y2021')">2021</button>
                 </div>
-                <div class="review-card">
-                    <p class="review-quote">"A good year's work... this will help to promote his presence within the Group and as a valued member of the IT Team."</p>
-                    <div class="review-author">Head of IT <span>2024 Appraisal</span></div>
-                </div>
-                <!-- 2023 -->
-                <div class="review-card">
-                    <p class="review-quote">"It's been a very busy year and Jae has helped the team deliver its Goals and Support Users with dignity and respect. Well done on passing the Foundation Cybersecurity course."</p>
-                    <div class="review-author">Line Manager <span>2023 Appraisal</span></div>
-                </div>
-                <div class="review-card">
-                    <p class="review-quote">"Jakie makes a significant contribution to the team and the business, dealing first and second line IT Support requests... I would like to see Jakie progress and fulfil his potential."</p>
-                    <div class="review-author">Head of IT <span>2023 Appraisal</span></div>
-                </div>
-                <!-- 2022 -->
-                <div class="review-card">
-                    <p class="review-quote">"I am happy with Jae's performance. He is a hard worker and a team player. Having Jae has helped deliver a better IT Helpdesk."</p>
-                    <div class="review-author">Line Manager <span>2022 Appraisal</span></div>
-                </div>
-                <div class="review-card">
-                    <p class="review-quote">"I am extremely pleased with Jakie's work, he is proving to be a real asset to the IT Team. I hope he can continue to work for the business as he makes a real contribution to the IT Team and the wider group."</p>
-                    <div class="review-author">Head of IT <span>2022 Appraisal</span></div>
-                </div>
-                <!-- 2021 -->
-                <div class="review-card">
-                    <p class="review-quote">"Jae has been an integral member of the team. In his 1st month, he resolved our intranet issues which would have cost us £2k to resolve. Has worked outside work hours to help the team and timekeeping has been excellent. Always a team player. Keep up the good work."</p>
-                    <div class="review-author">Line Manager <span>2021 Appraisal</span></div>
-                </div>
-                <div class="review-card">
-                    <p class="review-quote">"Jae has made a solid start during his time as a trainee. He has settled in really well and adapted to supporting our remote/agile workforce very quickly. Proactive in researching solutions."</p>
-                    <div class="review-author">Head of IT <span>2021 Appraisal</span></div>
+
+                <!-- The Reviews Content -->
+                <div class="content-column">
+                    
+                    <!-- 2024 Content -->
+                    <div id="y2024" class="tab-content active">
+                        <div class="review-card">
+                            <p class="review-quote">"Jae has been great help to the IT Team. From helpdesk calls to tasks outside his comfort zone. I see Jae has matured over time and understands the business needs. Going the extra mile when needed... Thank you for your help over the year and helping contribute to a good IT KPI score."</p>
+                            <div class="review-author">Line Manager <span>2024 Appraisal</span></div>
+                        </div>
+                        <div class="review-card secondary">
+                            <p class="review-quote">"A good year's work... this will help to promote his presence within the Group and as a valued member of the IT Team."</p>
+                            <div class="review-author">Head of IT <span>2024 Appraisal</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2023 Content -->
+                    <div id="y2023" class="tab-content">
+                        <div class="review-card">
+                            <p class="review-quote">"It's been a very busy year and Jae has helped the team deliver its Goals and Support Users with dignity and respect. Well done on passing the Foundation Cybersecurity course."</p>
+                            <div class="review-author">Line Manager <span>2023 Appraisal</span></div>
+                        </div>
+                        <div class="review-card secondary">
+                            <p class="review-quote">"Jakie makes a significant contribution to the team and the business, dealing first and second line IT Support requests... I would like to see Jakie progress and fulfil his potential."</p>
+                            <div class="review-author">Head of IT <span>2023 Appraisal</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2022 Content -->
+                    <div id="y2022" class="tab-content">
+                        <div class="review-card">
+                            <p class="review-quote">"I am happy with Jae's performance. He is a hard worker and a team player. Having Jae has helped deliver a better IT Helpdesk."</p>
+                            <div class="review-author">Line Manager <span>2022 Appraisal</span></div>
+                        </div>
+                        <div class="review-card secondary">
+                            <p class="review-quote">"I am extremely pleased with Jakie's work, he is proving to be a real asset to the IT Team. I hope he can continue to work for the business as he makes a real contribution to the IT Team and the wider group."</p>
+                            <div class="review-author">Head of IT <span>2022 Appraisal</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2021 Content -->
+                    <div id="y2021" class="tab-content">
+                        <div class="review-card">
+                            <p class="review-quote">"Jae has been an integral member of the team. In his 1st month, he resolved our intranet issues which would have cost us £2k to resolve. Has worked outside work hours to help the team and timekeeping has been excellent. Always a team player. Keep up the good work."</p>
+                            <div class="review-author">Line Manager <span>2021 Appraisal</span></div>
+                        </div>
+                        <div class="review-card secondary">
+                            <p class="review-quote">"Jae has made a solid start during his time as a trainee. He has settled in really well and adapted to supporting our remote/agile workforce very quickly. Proactive in researching solutions."</p>
+                            <div class="review-author">Head of IT <span>2021 Appraisal</span></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <footer class="site-footer">
-            <p>Built with <span style="color: #a855f7; font-size: 1.1rem;">♥</span> by Jakie & Gemini</p>
+            <p>2026 | Built with <span style="color: #58D8E4; font-size: 1.1rem;">♥</span> by Jakie & Gemini</p>
         </footer>
 
-    </div> <!-- End of Main Content -->
+    </div>
 
-    <!-- JavaScript for Mobile Menu & Overlay -->
+    <!-- JavaScript for Mobile Menu & Tabs -->
     <script>
+        // Sidebar logic
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('menuOverlay');
@@ -275,6 +269,26 @@
 
         hamburger.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
+
+        // Tab Switching Logic
+        function openTab(evt, yearName) {
+            // Hide all tab contents
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            // Remove 'active' class from all buttons
+            const tablinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            // Show current tab, and add 'active' class to the clicked button
+            document.getElementById(yearName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
     </script>
+
 </body>
 </html>

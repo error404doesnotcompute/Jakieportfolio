@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/logo.png">
+    <title>Contact | Jakie-Jae Woolley</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles & Oceanic Palette */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #0b0d14;
+            background-image: 
+                radial-gradient(circle at top left, rgba(88, 216, 228, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(52, 157, 204, 0.12) 0%, transparent 40%);
+            color: #d0d0d0; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; padding: 0; line-height: 1.6; display: flex; overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON                      */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 35px; height: 25px; cursor: pointer; position: fixed;
+            top: 30px; right: 35px; z-index: 1002; background: none; border: none; padding: 0;
+        }
+        .hamburger .bar {
+            width: 100%; height: 4px; background: linear-gradient(90deg, #58D8E4, #349DCC);
+            border-radius: 10px; transition: all 0.3s ease-in-out; transform-origin: left center;
+        }
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(5px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* ----------------------------------- */
+        /* SIDEBAR NAVIGATION                  */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-color: #0b0d14; border-right: 2px solid rgba(52, 157, 204, 0.3);
+            display: flex; flex-direction: column; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.9); }
+
+        .sidebar-brand { 
+            text-align: center; padding: 40px 20px 20px; margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(88, 216, 228, 0.1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .brand-logo { max-width: 70px; height: auto; margin-bottom: 15px; }
+        .brand-text { font-size: 1.4rem; font-weight: 600; color: #EBF5F9; letter-spacing: 1px; }
+        .brand-text span { color: #58D8E4; }
+        
+        .sidebar a { color: #7FB2DA; text-decoration: none; padding: 18px 40px; font-weight: 600; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover, .sidebar a.active-link { color: #58D8E4; background-color: rgba(88, 216, 228, 0.05); border-left: 4px solid #58D8E4; padding-left: 45px; }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content { 
+            margin-left: 0; width: 100%; display: flex; flex-direction: column; min-height: 100vh; 
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 20px; }
+        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #EBF5F9; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #58D8E4; line-height: 1; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #7FB2DA; line-height: 1; padding-top: 4px; }
+
+        /* ----------------------------------- */
+        /* BUTTON STYLES                       */
+        /* ----------------------------------- */
+        .btn { display: inline-flex; justify-content: center; align-items: center; background: linear-gradient(90deg, #349DCC, #58D8E4); color: #0b0d14; padding: 15px 35px; border-radius: 12px; font-weight: 900; font-size: 1.05rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; cursor: pointer; text-align: center; width: 100%; box-sizing: border-box; }
+        .btn:hover { background: linear-gradient(90deg, #58D8E4, #349DCC); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(88, 216, 228, 0.4); color: #0b0d14;}
+        .btn-outline { background: transparent; color: #58D8E4; border: 2px solid #58D8E4; }
+        .btn-outline:hover { background: rgba(88, 216, 228, 0.1); color: #EBF5F9; border-color: #349DCC; }
+
+        /* ----------------------------------- */
+        /* TWO-COLUMN CONTACT LAYOUT           */
+        /* ----------------------------------- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .glass-card { 
+            background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-top: 2px solid rgba(88, 216, 228, 0.4);
+            border-left: 2px solid rgba(52, 157, 204, 0.4);
+            padding: 40px; border-radius: 24px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; box-sizing: border-box;
+        }
+        .glass-card:hover { box-shadow: 0 20px 40px rgba(52, 157, 204, 0.15); }
+
+        /* Info Panel Styles */
+        .contact-info h3 { color: #EBF5F9; font-size: 1.6rem; margin-top: 0; margin-bottom: 20px; font-weight: 600; }
+        .contact-info p { color: #d0d0d0; font-size: 1.05rem; line-height: 1.7; margin-bottom: 30px; }
+        
+        /* Status Pill */
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(88, 216, 228, 0.1); border: 1px solid rgba(88, 216, 228, 0.3);
+            padding: 10px 20px; border-radius: 50px; color: #58D8E4; font-weight: 700; font-size: 0.95rem;
+            margin-bottom: 40px;
+        }
+        .status-dot { width: 10px; height: 10px; background-color: #58D8E4; border-radius: 50%; box-shadow: 0 0 10px #58D8E4; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(88, 216, 228, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(88, 216, 228, 0); } 100% { box-shadow: 0 0 0 0 rgba(88, 216, 228, 0); } }
+        
+        /* Dark Mode Form Inputs */
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+        .contact-form input, .contact-form textarea { 
+            background: rgba(11, 13, 20, 0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: #ffffff; 
+            padding: 16px; 
+            border-radius: 12px; 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 1rem; 
+            outline: none; 
+            transition: all 0.3s ease; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: #64748b; }
+        .contact-form input:focus, .contact-form textarea:focus { 
+            border-color: #58D8E4; 
+            background: rgba(11, 13, 20, 0.8);
+            box-shadow: 0 0 15px rgba(88, 216, 228, 0.2); 
+        }
+        
+        .contact-form button { margin-top: 10px; }
+
+        /* Security CAPTCHA Box */
+        .security-box {
+            background: rgba(52, 157, 204, 0.1);
+            padding: 25px; border-radius: 12px;
+            border: 1px solid rgba(52, 157, 204, 0.3); text-align: left;
+        }
+        .security-box label { display: block; color: #58D8E4; font-weight: 700; margin-bottom: 15px; font-size: 0.95rem; }
+        
+        #contactError { color: #ff6b6b; font-size: 0.9rem; font-weight: 700; margin-top: 12px; display: none; text-align: center; }
+
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer { text-align: center; padding: 25px 20px 20px; width: 100%; color: #7FB2DA; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); box-sizing: border-box; margin-top: auto; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .container { padding: 30px 20px 60px; }
+            .hero-title-wrapper .main-title { font-size: 2rem; }
+            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
+            .hero-title-wrapper .separator { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <!-- New Custom Logo & Branding -->
+        <div class="sidebar-brand">
+            <img src="Assets/logo.png" alt="Jakie Logo" class="brand-logo">
+            <div class="brand-text">Jakie<span>.</span></div>
+        </div>
+        <a href="index.html">About</a>
+        <a href="technical-profile.html">Technical Profile</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="recruitment.html">Recruitment Hub</a>
+        <a href="contact.html" class="active-link">Contact</a>
+    </div>
+
+    <div class="main-content">
+
+        <div class="hero">
+            <div class="hero-title-wrapper">
+                <span class="main-title">Get In Touch</span>
+                <span class="separator">|</span>
+                <span class="sub-title">Let's discuss our next opportunity</span>
+            </div>
+        </div>
+
+        <div class="container">
+        
+            <!-- Two-Column Grid Layout -->
+            <div class="contact-grid">
+                
+                <!-- Left Column: Info & Status -->
+                <div class="glass-card contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>Currently open to new opportunities. Whether you are reaching out regarding an onsite IT Support role in Central Birmingham, a remote position, or just want to connect for future opportunities, feel free to drop me a message.</p>
+                    
+                    <div class="status-pill">
+                        <div class="status-dot"></div>
+                        Available for Work
+                    </div>
+
+                    <p style="color: #7FB2DA; font-size: 0.9rem; margin-bottom: 15px;">Connect on social media:</p>
+                    <a href="http://www.linkedin.com/in/jakiewoolley" target="_blank" class="btn btn-outline">View LinkedIn Profile</a>
+
+		    <p style="color: #7FB2DA; font-size: 0.9rem; margin-bottom: 15px;">If you are recruiting, visit here:</p>
+                    <a href="recruitment.html" target="_blank" class="btn btn-outline">View Hub</a>
+                </div>
+
+                <!-- Right Column: The Form -->
+                <div class="glass-card">
+                    <!-- Formspree Integration -->
+                    <form action="https://formspree.io/f/xwvjdzpk" method="POST" class="contact-form" id="contactForm">
+                        <input type="text" name="name" placeholder="Your Name (required)" required>
+                        <input type="email" name="email" placeholder="Your Email Address (required)" required>
+                        <input type="text" name="company" placeholder="Company / Recruitment Agency (optional)">
+                        <input type="text" name="jd" placeholder="Job Description Link (optional)">
+                        <textarea name="message" rows="5" placeholder="Your question here" required></textarea>
+                        
+                        <!-- IT Security CAPTCHA -->
+                        <div class="security-box">
+                            <label for="securityAnswer">Security Check: What is the standard port for Remote Desktop Protocol (RDP)?</label>
+                            <input type="text" id="securityAnswer" name="security-check" placeholder="Enter port number..." required autocomplete="off">
+                            <div id="contactError">Incorrect port. Please try again to submit.</div>
+                        </div>
+
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="site-footer">
+            <p>2026 | Built by Jakie & Gemini</p>
+        </footer>
+
+    </div> 
+
+    <!-- JavaScript for Mobile Menu & Overlay -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- JavaScript for Form Security Validation -->
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const securityInput = document.getElementById('securityAnswer');
+        const contactError = document.getElementById('contactError');
+
+        contactForm.addEventListener('submit', function(event) {
+            // Prevent the form from submitting instantly
+            event.preventDefault();
+            
+            // Get the user's answer and strip out any accidental blank spaces
+            const answer = securityInput.value.trim();
+            
+            // Check if the answer is exactly 3389
+            if (answer === "3389") {
+                contactError.style.display = 'none';
+                
+                // If correct, programmatically submit the form to Formspree
+                contactForm.submit();
+            } else {
+                // If incorrect, show the red error text, clear the box, and make them try again
+                contactError.style.display = 'block';
+                securityInput.value = '';
+                securityInput.focus();
+            }
+        });
+    </script>
+
+</body>
+</html>

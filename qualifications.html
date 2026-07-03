@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/logo.png">
+    <title>Qualifications | Jakie-Jae Woolley</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles & Oceanic Palette */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #0b0d14;
+            background-image: 
+                radial-gradient(circle at top left, rgba(88, 216, 228, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(52, 157, 204, 0.12) 0%, transparent 40%);
+            color: #d0d0d0; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; padding: 0; line-height: 1.6; display: flex; overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON                      */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 35px; height: 25px; cursor: pointer; position: fixed;
+            top: 30px; right: 35px; z-index: 1002; background: none; border: none; padding: 0;
+        }
+        .hamburger .bar {
+            width: 100%; height: 4px; background: linear-gradient(90deg, #58D8E4, #349DCC);
+            border-radius: 10px; transition: all 0.3s ease-in-out; transform-origin: left center;
+        }
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(5px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* ----------------------------------- */
+        /* SIDEBAR NAVIGATION                  */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-color: #0b0d14; border-right: 2px solid rgba(52, 157, 204, 0.3);
+            display: flex; flex-direction: column; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+            overflow-y: auto;
+        }
+        .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.9); }
+
+        .sidebar-brand { 
+            text-align: center; padding: 40px 20px 20px; margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(88, 216, 228, 0.1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .brand-logo { max-width: 70px; height: auto; margin-bottom: 15px; }
+        .brand-text { font-size: 1.4rem; font-weight: 600; color: #EBF5F9; letter-spacing: 1px; }
+        .brand-text span { color: #58D8E4; }
+        
+        .sidebar a { color: #7FB2DA; text-decoration: none; padding: 18px 40px; font-weight: 600; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover, .sidebar a.active-link { color: #58D8E4; background-color: rgba(88, 216, 228, 0.05); border-left: 4px solid #58D8E4; padding-left: 45px; }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content { 
+            margin-left: 0; width: 100%; display: flex; flex-direction: column; min-height: 100vh; 
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 10px; }
+        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #EBF5F9; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #58D8E4; line-height: 1; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #7FB2DA; line-height: 1; padding-top: 4px; }
+
+        .section-heading { color: #EBF5F9; font-size: 1.8rem; font-weight: 600; margin-bottom: 25px; text-align: center;}
+
+        /* ----------------------------------- */
+        /* HORIZONTAL TAB MENU (PILLS)         */
+        /* ----------------------------------- */
+        .tabs-row {
+            display: flex; justify-content: center; gap: 15px; margin-top: 40px; margin-bottom: 50px; flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: rgba(11, 13, 20, 0.6); border: 1px solid rgba(88, 216, 228, 0.2); 
+            color: #7FB2DA; padding: 12px 35px; border-radius: 50px;
+            font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .tab-btn:hover { background: rgba(88, 216, 228, 0.1); color: #58D8E4; border-color: #58D8E4; }
+        .tab-btn.active {
+            background: linear-gradient(90deg, #349DCC, #58D8E4); color: #0b0d14;
+            border-color: transparent; box-shadow: 0 5px 15px rgba(88, 216, 228, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ----------------------------------- */
+        /* GLASSMORPHISM CARD STYLE            */
+        /* ----------------------------------- */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-top: 2px solid rgba(88, 216, 228, 0.4);
+            border-left: 2px solid rgba(52, 157, 204, 0.4);
+            border-radius: 20px; padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative; overflow: hidden; margin-bottom: 40px;
+        }
+
+        /* ----------------------------------- */
+        /* CREDLY BADGES                       */
+        /* ----------------------------------- */
+        .badge-showcase { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; position: relative; z-index: 2;}
+        .credly-wrapper { 
+            background: rgba(11, 13, 20, 0.6); 
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            display: flex; justify-content: center; align-items: center; 
+            min-width: 180px; min-height: 180px; transition: all 0.3s ease; 
+        }
+        .credly-wrapper:hover { 
+            transform: translateY(-5px); border-color: #58D8E4; 
+            box-shadow: 0 10px 25px rgba(88, 216, 228, 0.2); 
+        }
+
+        /* ----------------------------------- */
+        /* ROADMAP PILLS                       */
+        /* ----------------------------------- */
+        .roadmap-container { display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 2;}
+        .roadmap-container a { text-decoration: none !important; color: inherit !important; }
+        .roadmap-item { 
+            display: flex; align-items: center; background: rgba(11, 13, 20, 0.6); 
+            padding: 15px 25px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); 
+            transition: all 0.3s ease; 
+        }
+        .roadmap-item:hover { transform: translateX(5px); border-color: #349DCC; background: rgba(52, 157, 204, 0.05); }
+        .roadmap-status { font-weight: 900; min-width: 130px; color: #7FB2DA; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .status-active { color: #58D8E4; text-shadow: 0 0 10px rgba(88, 216, 228, 0.4);}
+        .roadmap-title { flex-grow: 1; font-weight: 500; color: #EBF5F9; font-size: 1.05rem;}
+
+        /* ----------------------------------- */
+        /* BENTO GRID (ACADEMIC HISTORY)       */
+        /* ----------------------------------- */
+        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 40px; }
+
+        .bento-card {
+            background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-top: 2px solid rgba(52, 157, 204, 0.3);
+            border-radius: 20px; padding: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .bento-card:hover { transform: translateY(-5px); border-top-color: #58D8E4; }
+        .bento-card.full-width { grid-column: span 2; }
+        
+        .bento-card h3 { margin-top: 0; margin-bottom: 5px; color: #EBF5F9; font-size: 1.3rem; }
+        .bento-card .date { color: #349DCC; font-style: italic; margin-bottom: 15px; font-size: 0.95rem; font-weight: 700; }
+        .bento-card ul { list-style: none; padding: 0; margin: 0; color: #d0d0d0; }
+        .bento-card li { margin-bottom: 8px; padding-left: 20px; position: relative; line-height: 1.5; }
+        .bento-card li::before { content: '▹'; color: #58D8E4; position: absolute; left: 0; font-weight: 900;}
+
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer { text-align: center; padding: 25px 20px 20px; width: 100%; color: #7FB2DA; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); box-sizing: border-box; margin-top: auto; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 850px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.full-width { grid-column: span 1; }
+            .roadmap-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .roadmap-status { min-width: auto; margin-bottom: 5px; }
+            .container { padding: 20px 20px 60px; }
+            .hero-title-wrapper .main-title { font-size: 2rem; }
+            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
+            .hero-title-wrapper .separator { display: none; }
+            .tabs-row { gap: 10px; }
+            .tab-btn { flex: 1 1 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <!-- Dashboard Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <!-- New Custom Logo & Branding -->
+        <div class="sidebar-brand">
+            <img src="Assets/logo.png" alt="Jakie Logo" class="brand-logo">
+            <div class="brand-text">Jakie<span>.</span></div>
+        </div>
+        <a href="index.html">About</a>
+        <a href="technical-profile.html">Technical Profile</a>
+        <a href="qualifications.html" class="active-link">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="recruitment.html">Recruitment Hub</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+
+        <div class="hero">
+            <div class="hero-title-wrapper">
+                <span class="main-title">Qualifications</span>
+                <span class="separator">|</span>
+                <span class="sub-title">Certifications & Academic History</span>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <!-- THE HORIZONTAL TAB MENU -->
+            <div class="tabs-row">
+                <button class="tab-btn active" onclick="openTab(event, 'tab-certifications')">Live Certifications</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-roadmap')">Certification Roadmap</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-academic')">Academic History</button>
+            </div>
+
+            <!-- TAB 1: LIVE CERTIFICATIONS -->
+            <div id="tab-certifications" class="tab-content active">
+                <div class="glass-card" style="text-align: center;">                    
+                    <div class="badge-showcase" style="margin-top: 20px;">
+                        <div class="credly-wrapper">
+                            <a href="https://www.credly.com/badges/299aa4db-b859-45df-adb4-18c2c6b1ee06" target="_blank">
+                                <img src="Assets/badge1.png" alt="Foundation Cyber Security Badge" style="width: 140px; height: auto; transition: transform 0.3s ease;">
+                            </a>
+                        </div>
+                    
+                        <div class="credly-wrapper">
+                            <a href="https://drive.google.com/file/d/1lG_lTx-6EzoFkBgbpWAse7-UsiztehC1/view?usp=sharing" target="_blank">
+                                <img src="Assets/QACert1.png" alt="QA Certificate" style="width: 140px; height: auto; transition: transform 0.3s ease;">
+                            </a>
+                        </div>
+
+                        <div class="credly-wrapper">
+                            <a href="https://drive.google.com/file/d/1X3wmOC7npQi2V7shByrQEynTJtrdCLK2/view?usp=sharing" target="_blank">
+                                <img src="Assets/QACert2.png" alt="QA Certificate" style="width: 140px; height: auto; transition: transform 0.3s ease;">
+                            </a>
+                        </div>
+
+                        <div class="credly-wrapper">
+                            <a href="https://www.credly.com/badges/e0c3bbea-6918-42c2-93dc-9ea82f8689e8" target="_blank">
+                                <img src="Assets/badge2.png" alt="Microsoft Certification Badge" style="width: 140px; height: auto; transition: transform 0.3s ease;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: CERTIFICATION ROADMAP -->
+            <div id="tab-roadmap" class="tab-content">
+                <div class="glass-card">
+                    <p style="color: #7FB2DA; margin-top: -10px; margin-bottom: 25px;">Dedicated to continuous technical growth and expanding expertise across Microsoft ecosystems and IT Service Management frameworks.</p>
+                    
+                    <div class="roadmap-container">
+                        <a href="https://learn.microsoft.com/en-us/credentials/certifications/modern-desktop/?practice-assessment-type=certification" target="_blank">
+                            <div class="roadmap-item" style="border-color: rgba(88, 216, 228, 0.4); background: rgba(88, 216, 228, 0.05);">
+                                <div class="roadmap-status status-active">In Progress</div>
+                                <div class="roadmap-title">MD-102: Microsoft 365 Endpoint Administrator</div>
+                            </div>
+                        </a>
+
+                        <a href="https://learn.microsoft.com/en-us/training/courses/ms-102t00" target="_blank">
+                            <div class="roadmap-item">
+                                <div class="roadmap-status">Planned</div>
+                                <div class="roadmap-title">MS-102: Microsoft 365 Administrator</div>
+                            </div>
+                        </a>
+
+                        <a href="https://learn.microsoft.com/en-us/training/courses/az-104t00" target="_blank">
+                            <div class="roadmap-item">
+                                <div class="roadmap-status">Planned</div>
+                                <div class="roadmap-title">AZ-104: Microsoft Azure Administrator</div>
+                            </div>
+                        </a>
+
+                        <a href="https://learn.microsoft.com/en-us/training/courses/az-900t00" target="_blank">
+                            <div class="roadmap-item">
+                                <div class="roadmap-status">Planned</div>
+                                <div class="roadmap-title">AZ-900: Microsoft Azure Fundamentals</div>
+                            </div>
+                        </a>
+
+                        <a href="https://www.itil.org.uk/training/itil-foundation-level-courses/itil-foundation-training" target="_blank">
+                            <div class="roadmap-item">
+                                <div class="roadmap-status">Planned</div>
+                                <div class="roadmap-title">ITIL 4 Foundation Framework</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ACADEMIC HISTORY -->
+            <div id="tab-academic" class="tab-content">
+                <div class="bento-grid">
+                    <!-- Box 1: Corporate Training -->
+                    <div class="bento-card">
+                        <h3>Corporate IT Training</h3>
+                        <div class="date">2016 – 2025</div>
+                        <ul>
+                            <li>QA Foundation Certificate in Cyber Security</li>
+                            <li>GDPR & Data Protection</li>
+                        </ul>
+                    </div>
+
+                    <!-- Box 2: Birmingham Met -->
+                    <div class="bento-card">
+                        <h3>Birmingham Metropolitan College</h3>
+                        <div class="date">2014 – 2017</div>
+                        <ul>
+                            <li>C&G Level 2 Business Administration Apprenticeship (2016 – 2017)</li>
+                            <li>C&G Level 2 Consumer Electronics Engineering (2014 – 2015)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Box 3: Heartlands Academy (Full Width) -->
+                    <div class="bento-card full-width" style="border-top-color: rgba(88, 216, 228, 0.4);">
+                        <h3>Heartlands Academy & Sixth Form</h3>
+                        <div class="date">2007 – 2014</div>
+                        <ul>
+                            <li>BTEC Level 3 Subsidiary Diploma in IT | Merit</li>
+                            <li>GCSE Mathematics | Grade C</li>
+                            <li>GCSE English | Grade C</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="site-footer">
+            <p>2026 | Built by Jakie & Gemini</p>
+        </footer>
+
+    </div> 
+    
+    <!-- Tab & Sidebar JavaScript -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Tab Switching Logic
+        function openTab(evt, tabName) {
+            // Hide all tab contents
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            // Remove 'active' class from all buttons
+            const tablinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            // Show current tab, and add 'active' class to the clicked button
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+</body>
+</html>

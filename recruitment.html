@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/logo.png">
+    <title>Recruitment Hub | Jakie-Jae Woolley</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles & Oceanic Palette */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #0b0d14;
+            background-image: 
+                radial-gradient(circle at top left, rgba(88, 216, 228, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(52, 157, 204, 0.12) 0%, transparent 40%);
+            color: #d0d0d0; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; padding: 0; line-height: 1.6; display: flex; overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON                      */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 35px; height: 25px; cursor: pointer; position: fixed;
+            top: 30px; right: 35px; z-index: 1002; background: none; border: none; padding: 0;
+        }
+        .hamburger .bar {
+            width: 100%; height: 4px; background: linear-gradient(90deg, #58D8E4, #349DCC);
+            border-radius: 10px; transition: all 0.3s ease-in-out; transform-origin: left center;
+        }
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(5px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* ----------------------------------- */
+        /* SIDEBAR NAVIGATION                  */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-color: #0b0d14; border-right: 2px solid rgba(52, 157, 204, 0.3);
+            display: flex; flex-direction: column; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+            overflow-y: auto;
+        }
+        .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.9); }
+
+        .sidebar-brand { 
+            text-align: center; padding: 40px 20px 20px; margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(88, 216, 228, 0.1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .brand-logo { max-width: 70px; height: auto; margin-bottom: 15px; }
+        .brand-text { font-size: 1.4rem; font-weight: 900; color: #EBF5F9; letter-spacing: 1px; }
+        .brand-text span { color: #58D8E4; }
+        
+        .sidebar a { color: #7FB2DA; text-decoration: none; padding: 16px 40px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover, .sidebar a.active-link { color: #58D8E4; background-color: rgba(88, 216, 228, 0.05); border-left: 4px solid #58D8E4; padding-left: 45px; }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content { 
+            margin-left: 0; width: 100%; display: flex; flex-direction: column; min-height: 100vh; 
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 40px 80px; flex-grow: 1; width: 100%; box-sizing: border-box; }
+        
+        /* Hero Section */
+        .hero { text-align: center; padding: 50px 20px 10px; }
+        .hero-title-wrapper { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .hero-title-wrapper .main-title { font-size: 2.5rem; font-weight: 600; color: #EBF5F9; line-height: 1; padding-top: 4px; }
+        .hero-title-wrapper .separator { font-size: 2.5rem; font-weight: 300; color: #58D8E4; line-height: 1; }
+        .hero-title-wrapper .sub-title { font-size: 1.4rem; font-weight: 400; color: #7FB2DA; line-height: 1; padding-top: 4px; }
+
+        /* ----------------------------------- */
+        /* HORIZONTAL TAB MENU (PILLS)         */
+        /* ----------------------------------- */
+        .tabs-row {
+            display: flex; justify-content: center; gap: 15px; margin-top: 40px; margin-bottom: 50px; flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: rgba(11, 13, 20, 0.6); border: 1px solid rgba(88, 216, 228, 0.2); 
+            color: #7FB2DA; padding: 12px 35px; border-radius: 50px;
+            font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .tab-btn:hover { background: rgba(88, 216, 228, 0.1); color: #58D8E4; border-color: #58D8E4; }
+        .tab-btn.active {
+            background: linear-gradient(90deg, #349DCC, #58D8E4); color: #0b0d14;
+            border-color: transparent; box-shadow: 0 5px 15px rgba(88, 216, 228, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ----------------------------------- */
+        /* BENTO GRID LAYOUTS                  */
+        /* ----------------------------------- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 40px;
+        }
+
+        .bento-card {
+            background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-top: 2px solid rgba(88, 216, 228, 0.4);
+            border-radius: 20px; padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .bento-card:nth-child(even) { border-top-color: rgba(52, 157, 204, 0.4); }
+        .bento-card:hover { transform: translateY(-5px); border-top-color: #58D8E4; box-shadow: 0 20px 40px rgba(88, 216, 228, 0.15); }
+        .bento-card:nth-child(even):hover { border-top-color: #349DCC; box-shadow: 0 20px 40px rgba(52, 157, 204, 0.15); }
+
+        .bento-card.full-width { grid-column: span 2; }
+
+        .bento-card h3 { color: #EBF5F9; font-size: 1.5rem; margin-top: 0; margin-bottom: 25px; font-weight: 500; border-bottom: 2px solid rgba(88, 216, 228, 0.3); display: inline-block; padding-bottom: 8px;}
+        .bento-card:nth-child(even) h3 { border-bottom-color: rgba(52, 157, 204, 0.3); }
+        .bento-card.full-width h3 { border-bottom-color: rgba(88, 216, 228, 0.3); }
+        
+        .bento-card h4 { color: #58D8E4; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; font-weight: 500; }
+        .bento-card:nth-child(even) h4 { color: #7FB2DA; }
+        .bento-card.full-width h4 { color: #58D8E4; }
+
+        .bento-card p { color: #d0d0d0; line-height: 1.7; font-size: 1.05rem; margin-bottom: 20px;}
+
+        /* Custom Lists */
+        .custom-list { list-style: none; padding: 0; margin: 0; color: #d0d0d0; }
+        .custom-list li { margin-bottom: 15px; padding-left: 30px; position: relative; line-height: 1.6; font-size: 1.05rem; }
+        .custom-list li::before { content: '▹'; color: #58D8E4; position: absolute; left: 0; font-weight: 900; font-size: 1.2rem;}
+        .bento-card:nth-child(even) .custom-list li::before { color: #349DCC; }
+
+        /* Accent Pill for highlights */
+        .pill-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 25px; }
+        
+        .highlight-pill {
+            display: inline-block; background: rgba(88, 216, 228, 0.1); border: 1px solid rgba(88, 216, 228, 0.3);
+            color: #58D8E4; padding: 8px 18px; border-radius: 20px; font-size: 0.9rem; font-weight: 700;
+        }
+        .highlight-pill.alt { background: rgba(52, 157, 204, 0.1); border-color: rgba(52, 157, 204, 0.3); color: #7FB2DA; }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #349DCC, #58D8E4); color: #0b0d14; padding: 12px 25px; border-radius: 12px; font-weight: 900; font-size: 1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; box-sizing: border-box; cursor: pointer;}
+        .btn:hover { background: linear-gradient(90deg, #58D8E4, #349DCC); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(88, 216, 228, 0.4); color: #0b0d14; }
+
+        /* ----------------------------------- */
+        /* MODAL / DIALOG STYLES               */
+        /* ----------------------------------- */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(11, 13, 20, 0.9);
+            backdrop-filter: blur(8px); justify-content: center; align-items: center;
+        }
+        .modal.show { display: flex; animation: fadeIn 0.3s ease; }
+        
+        .modal-content {
+            position: relative; max-width: 90%; max-height: 90vh;
+            border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 2px solid rgba(88, 216, 228, 0.4); overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .modal-content img { width: 100%; max-height: 85vh; object-fit: contain; display: block; }
+        
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; color: #EBF5F9;
+            font-size: 2rem; font-weight: 900; cursor: pointer; transition: color 0.3s ease;
+            background: rgba(11, 13, 20, 0.8); border-radius: 50%; width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center; line-height: 1; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .close-btn:hover { color: #58D8E4; border-color: #58D8E4; }
+
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer { text-align: center; padding: 25px 20px 20px; width: 100%; color: #7FB2DA; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); box-sizing: border-box; margin-top: auto; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 850px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.full-width { grid-column: span 1; }
+            .container { padding: 20px 20px 60px; }
+            .hero-title-wrapper .main-title { font-size: 2rem; }
+            .hero-title-wrapper .sub-title { font-size: 1.1rem; }
+            .hero-title-wrapper .separator { display: none; }
+            .tabs-row { gap: 10px; }
+            .tab-btn { flex: 1 1 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+
+    <!-- Dashboard Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="Assets/logo.png" alt="Jakie Logo" class="brand-logo">
+            <div class="brand-text">Jakie<span>.</span></div>
+        </div>
+        <a href="index.html">About</a>
+        <a href="technical-profile.html">Technical Profile</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="recruitment.html" class="active-link">Recruitment Hub</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+
+        <div class="hero">
+            <div class="hero-title-wrapper">
+                <span class="main-title">Recruitment Hub</span>
+                <span class="separator">|</span>
+                <span class="sub-title">Logistics & Work Preferences</span>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <!-- THE HORIZONTAL TAB MENU -->
+            <div class="tabs-row">
+                <button class="tab-btn active" onclick="openTab(event, 'tab-arrangements')">Working Arrangements</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-roles')">Target Roles</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-interviews')">Availability & Interviews</button>
+            </div>
+
+            <!-- TAB 1: WORKING ARRANGEMENTS -->
+            <div id="tab-arrangements" class="tab-content active">
+                <div class="bento-grid">
+                    
+                    <div class="bento-card">
+                        <h3>Location & Base</h3>
+                        <p>I am based in <strong>Birmingham, UK</strong>.</p>
+                        <p>I am open to on-site or hybrid roles within Central Birmingham and easily commutable surrounding areas.</p>
+
+			<div class="pill-container" style="margin-top: 15px;">
+                            <span class="highlight-pill alt">Hybrid Work</span>
+                            <span class="highlight-pill alt">Freelance Work</span>
+                            <span class="highlight-pill alt">Remote Work</span>
+                            <span class="highlight-pill alt">On-site Work</span>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <h3>Working Models</h3>
+                        <ul class="custom-list">
+                            <li><strong>Hybrid:</strong> Comfortable with hybrid working schedules requiring regular office presence on set days.</li>
+                            <li><strong>Fully Remote:</strong> Fully equipped for remote roles based anywhere in the UK, utilising my own dedicated IT setup and high-speed network.</li>
+                            <li><strong>Fully On-Site:</strong> Happy to work 5 days a week on-site for roles located in or near Central Birmingham.</li>
+                        </ul>
+                    </div>
+
+                    <!-- FULL WIDTH COMMUTE MAP CARD -->
+                    <div class="bento-card full-width">
+                        <h3>Commute Radius & Covered Areas</h3>
+                        <p>My ideal on-site commute is within a roughly <strong>5km radius of Central Birmingham</strong>, ensuring quick travel times and high reliability for on-site emergencies. I am also open to travel via direct train routes extending beyond this core radius.</p>
+                        
+                        <button class="btn" style="margin-top: 10px; margin-bottom: 10px;" onclick="openModal()">View Commute Map</button>
+                        
+                        <div class="pill-container">
+                            <span class="highlight-pill alt"">Birmingham Central</span>
+                            <span class="highlight-pill alt">Jewellery Quarter</span>
+                            <span class="highlight-pill alt"">Digbeth</span>
+                            <span class="highlight-pill alt">Aston</span>
+                            <span class="highlight-pill alt"">Nechells</span>
+                            <span class="highlight-pill alt">Ladywood</span>
+                            <span class="highlight-pill alt"">Vauxhall</span>
+                            <span class="highlight-pill alt">Saltley</span>
+                            <span class="highlight-pill alt"">Washwood Heath</span>
+                            <span class="highlight-pill alt">Balsall Heath</span>
+                            <span class="highlight-pill alt"">Highgate</span>
+                            <span class="highlight-pill alt">Lozells</span>
+                            <span class="highlight-pill alt"">Perry Barr</span>
+                            <span class="highlight-pill alt">Erdington</span>
+                            <span class="highlight-pill alt"">Gravelly Hill</span>
+                            <span class="highlight-pill alt">Stockland Green</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TAB 2: TARGET ROLES -->
+            <div id="tab-roles" class="tab-content">
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <h3>Ideal Positions</h3>
+                        <p>I am actively seeking roles that allow me to utilise my years of hands-on technical experience and cloud administration skills.</p>
+                        <ul class="custom-list">
+                            <li>ICT Support Analyst</li>
+                            <li>Infrastructure Technician</li>
+                            <li>1st and 2nd Line Support / Multi-Tier Support</li>
+                            <li>IT Systems Administrator</li>
+                        </ul>
+                    </div>
+
+                    <div class="bento-card">
+                        <h3>Target Environment</h3>
+                        <p>I thrive in environments where I can leverage my advanced technical competencies. I am particularly interested in roles involving:</p>
+                        <ul class="custom-list">
+                            <li>Microsoft 365 & Entra ID administration.</li>
+                            <li>Endpoint management via Microsoft Intune.</li>
+                            <li>Multi-tier (L1-L3) incident resolution.</li>
+                            <li>Opportunities to assist with infrastructure projects and server maintenance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: AVAILABILITY & INTERVIEWS -->
+            <div id="tab-interviews" class="tab-content">
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <h3>Notice Period & Status</h3>
+                        <h4>Current Status</h4>
+                        <p>I am <strong>immediately available</strong> to commence new employment. I have no restrictive notice periods to serve.</p>
+                        
+                        <h4>Contract Types</h4>
+                        <p>I am primarily looking for <strong>Permanent</strong> positions, but I am open to temporary positions and discussing long-term fixed contracts if the role aligns with my technical stack.</p>
+                        
+                        <div class="pill-container" style="margin-top: 15px;">
+                            <span class="highlight-pill">No Notice Period</span>
+                            <span class="highlight-pill">Available Immediately</span>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <h3>Interview Preferences</h3>
+                        <ul class="custom-list">
+                            <li><strong>Initial Screenings:</strong> Happy to accommodate video interviews via Microsoft Teams, Zoom, or Google Meet at short notice.</li>
+                            <li><strong>Technical/Final Stages:</strong> Willing to travel for in-person interviews within my commute radius, or conduct them virtually for remote positions.</li>
+                            <li><strong>Flexibility:</strong> Because I am immediately available, I can usually accommodate interview requests within 24-48 hours.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="site-footer">
+            <p>2026 | Built by Jakie & Gemini</p>
+        </footer>
+
+    </div> 
+
+    <!-- Map Modal -->
+    <div id="mapModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal(event)">&times;</span>
+            <img src="Assets/map.png" alt="Birmingham Commute Radius Map">
+        </div>
+    </div>
+    
+    <!-- Tab, Sidebar & Modal JavaScript -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Tab Switching Logic
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            const tablinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('mapModal').classList.add('show');
+        }
+
+        function closeModal(event) {
+            document.getElementById('mapModal').classList.remove('show');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Assets/logo.png">
+    <title>Jakie-Jae Woolley | IT Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles & Custom Palette */
+        /* 
+           Palette: 
+           Turquoise Blue: #58D8E4
+           Shakespeare (Deep Blue): #349DCC
+           Viking (Soft Blue): #7FB2DA
+           Aqua Spring (Off-White): #EBF5F9 
+        */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #0b0d14;
+            background-image: 
+                radial-gradient(circle at top left, rgba(88, 216, 228, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(52, 157, 204, 0.12) 0%, transparent 40%);
+            color: #d0d0d0; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            display: flex; 
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------- */
+        /* HAMBURGER ICON                      */
+        /* ----------------------------------- */
+        .hamburger {
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 35px; height: 25px; cursor: pointer; position: fixed;
+            top: 30px; right: 35px; z-index: 1002; background: none; border: none; padding: 0;
+        }
+        .hamburger .bar {
+            width: 100%; height: 4px; background: linear-gradient(90deg, #58D8E4, #349DCC);
+            border-radius: 10px; transition: all 0.3s ease-in-out; transform-origin: left center;
+        }
+        .hamburger.active .bar:nth-child(1) { transform: rotate(45deg); }
+        .hamburger.active .bar:nth-child(2) { opacity: 0; width: 0; }
+        .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg); }
+
+        /* ----------------------------------- */
+        /* BACKGROUND OVERLAY                  */
+        /* ----------------------------------- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(5px);
+            z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        /* ----------------------------------- */
+        /* SIDEBAR NAVIGATION                  */
+        /* ----------------------------------- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-color: #0b0d14; border-right: 2px solid rgba(52, 157, 204, 0.3);
+            display: flex; flex-direction: column; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.9); }
+
+        /* New Logo Branding */
+        .sidebar-brand { 
+            text-align: center; padding: 40px 20px 20px; margin-bottom: 10px; 
+            border-bottom: 1px solid rgba(88, 216, 228, 0.1); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .brand-logo { max-width: 70px; height: auto; margin-bottom: 15px; }
+        .brand-text { font-size: 1.4rem; font-weight: 600; color: #EBF5F9; letter-spacing: 1px; }
+        .brand-text span { color: #58D8E4; }
+
+        .sidebar a { color: #7FB2DA; text-decoration: none; padding: 18px 40px; font-weight: 600; font-size: 1.15rem; transition: all 0.3s ease; display: block; border-left: 4px solid transparent; }
+        .sidebar a:hover, .sidebar a.active-link { color: #58D8E4; background-color: rgba(88, 216, 228, 0.05); border-left: 4px solid #58D8E4; padding-left: 45px; }
+
+        /* ----------------------------------- */
+        /* MAIN CONTENT WRAPPER                */
+        /* ----------------------------------- */
+        .main-content {
+            margin-left: 0; width: 100%; display: flex; flex-direction: column;
+            align-items: center; box-sizing: border-box; position: relative;
+        }
+
+        /* ----------------------------------- */
+        /* RING/SURROUND BENTO GRID LAYOUT     */
+        /* ----------------------------------- */
+        .bento-container {
+            width: 100%; max-width: 1100px; padding: 40px 20px 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; box-sizing: border-box;
+        }
+
+        /* Glassmorphism Card Style */
+        .bento-card {
+            background: linear-gradient(135deg, rgba(20, 25, 35, 0.7), rgba(11, 13, 20, 0.5));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 24px; padding: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .bento-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(88, 216, 228, 0.15); }
+
+        /* --- THE SURROUND GRID POSITIONS --- */
+        .card-intro { grid-column: 1 / 3; grid-row: 1 / 2; }
+        .card-actions { grid-column: 3 / 4; grid-row: 1 / 2; gap: 12px; padding: 25px; }
+        
+        .card-stat-1 { grid-column: 1 / 2; grid-row: 2 / 3; align-items: center; text-align: center; border-top: 2px solid rgba(88, 216, 228, 0.4);} 
+        .card-avatar { grid-column: 2 / 3; grid-row: 2 / 3; align-items: center; padding: 0; overflow: hidden; position: relative;} 
+        .card-stat-5 { grid-column: 3 / 4; grid-row: 2 / 3; align-items: center; text-align: center; border-top: 2px solid rgba(52, 157, 204, 0.4);} 
+        
+        .card-stat-2 { grid-column: 1 / 2; grid-row: 3 / 4; align-items: center; text-align: center; border-top: 2px solid rgba(52, 157, 204, 0.4);} 
+        .card-stat-3 { grid-column: 2 / 3; grid-row: 3 / 4; align-items: center; text-align: center; border-top: 2px solid rgba(88, 216, 228, 0.4);} 
+        .card-stat-4 { grid-column: 3 / 4; grid-row: 3 / 4; align-items: center; text-align: center; border-top: 2px solid rgba(52, 157, 204, 0.4);} 
+
+        .card-summary { grid-column: 1 / 4; grid-row: 4 / 5; }
+
+        /* Typography */
+        .custom-gradient-text { background: linear-gradient(90deg, #58D8E4, #349DCC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+
+        .card-intro h1 { font-size: 3.5rem; font-weight: 600; margin: 0 0 10px 0; line-height: 1.1; color: #EBF5F9; }
+        .card-intro h2 { font-size: 1.4rem; color: #7FB2DA; margin: 0; font-weight: 500; }
+
+        /* Stat Styles */
+        .stat-number { font-size: 3rem; font-weight: 600; line-height: 1; margin-bottom: 5px; }
+        .stat-cyan { color: #58D8E4; }
+        .stat-blue { color: #349DCC; }
+        .stat-label { font-size: 0.9rem; color: #EBF5F9; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; line-height: 1.4;}
+
+        .card-summary h3 { font-size: 1.6rem; margin: 0 0 15px 0; color: #EBF5F9; border-bottom: 2px solid #58D8E4; display: inline-block; padding-bottom: 8px; }
+        .card-summary p { color: #d0d0d0; margin: 0; font-size: 1.1rem; line-height: 1.7; }
+
+        /* Avatar Styling */
+        .avatar-glow {
+            width: 100%; height: 100%; border-radius: 24px;
+            background: radial-gradient(circle at center, rgba(52, 157, 204, 0.3) 0%, transparent 80%);
+            display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;
+        }
+        .avatar-img {
+            width: 100%; max-width: 120px; aspect-ratio: 1/1; object-fit: cover;
+            border-radius: 50%; box-shadow: 0 0 30px rgba(52, 157, 204, 0.4);
+        }
+
+        /* Buttons */
+        .btn { display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #349DCC, #58D8E4); color: #0b0d14; padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease; border: none; width: 100%; box-sizing: border-box;}
+        .btn:hover { background: linear-gradient(90deg, #58D8E4, #349DCC); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(88, 216, 228, 0.4); color: #0b0d14; }
+        .btn-outline { background: transparent; color: #58D8E4; border: 2px solid #58D8E4; }
+        .btn-outline:hover { background: rgba(88, 216, 228, 0.1); color: #EBF5F9; border-color: #349DCC; }
+
+        /* ----------------------------------- */
+        /* FOOTER STYLES                       */
+        /* ----------------------------------- */
+        .site-footer { text-align: center; padding: 25px 20px 20px; width: 100%; color: #7FB2DA; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.05); box-sizing: border-box; margin-top: auto; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .bento-container { grid-template-columns: 1fr; padding: 100px 20px 40px; }
+            .card-intro, .card-actions, .card-avatar, .card-stat-1, .card-stat-2, .card-stat-3, .card-stat-4, .card-stat-5, .card-summary { grid-column: span 1; grid-row: auto; }
+            .card-intro h1 { font-size: 2.5rem; }
+            .card-avatar { min-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <!-- New Custom Logo & Branding -->
+        <div class="sidebar-brand">
+            <!-- Ensure your logo is named logo.png in the Assets folder -->
+            <img src="Assets/logo.png" alt="Jakie Logo" class="brand-logo">
+            <div class="brand-text">Jakie<span>.</span></div>
+        </div>
+        <a href="index.html" class="active-link">About</a>
+        <a href="technical-profile.html">Technical Profile</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="appraisals.html">Appraisals</a>
+        <a href="recruitment.html">Recruitment Hub</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <div class="main-content">
+
+        <!-- THE BENTO DASHBOARD -->
+        <div class="bento-container">
+            
+            <!-- Box 1: Intro -->
+            <div class="bento-card card-intro">
+                <h1>Hello ✌️<br>I'm <span class="custom-gradient-text">Jakie</span></h1>
+                <h2>Infrastructure & IT Support Technician</h2>
+            </div>
+
+            <!-- Box 2: Action Buttons -->
+            <div class="bento-card card-actions">
+                <a href="technical-profile.html" class="btn">View Profile</a>
+                <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+                <a href="recruitment.html" class="btn btn-outline">Recruitment Hub</a>
+            </div>
+
+            <!-- Row 2 -->
+            <!-- Stat 1: Left of Avatar -->
+            <div class="bento-card card-stat-1">
+                <div class="stat-number stat-cyan">5+</div>
+                <div class="stat-label">Years Hands-on<br>IT Helpdesk</div>
+            </div>
+
+            <!-- Center Avatar -->
+            <div class="bento-card card-avatar">
+                <div class="avatar-glow">
+                    <img src="Assets/profile.png" alt="Jakie-Jae Woolley" class="avatar-img">
+                </div>
+            </div>
+
+            <!-- Stat 5: Right of Avatar -->
+            <div class="bento-card card-stat-5">
+                <div class="stat-number stat-cyan">L1-L3</div>
+                <div class="stat-label">Multi-Tier<br>Support</div>
+            </div>
+
+            <!-- Row 3 -->
+            <!-- Stat 2: Below 5+ -->
+            <div class="bento-card card-stat-2">
+                <div class="stat-number stat-blue">8+</div>
+                <div class="stat-label">Years Customer<br>Support</div>
+            </div>
+
+            <!-- Stat 3: Below Avatar -->
+            <div class="bento-card card-stat-3">
+                <div class="stat-number stat-cyan">7+</div>
+                <div class="stat-label">Years Active<br>Directory</div>
+            </div>
+
+            <!-- Stat 4: Right of Stat 3 -->
+            <div class="bento-card card-stat-4">
+                <div class="stat-number stat-blue">150+</div>
+                <div class="stat-label">Active Users<br>Supported</div>
+            </div>
+
+            <!-- Box 7: Professional Summary -->
+            <div class="bento-card card-summary">
+                <h3>About Me</h3>
+                <p>A highly technical problem-solver providing multi-tier support in fast-paced environments. Experienced in Microsoft 365 and Intune deployment, managing BAU requests, and communicating effectively with users of all technical levels. Seeking to bring my skills to an infrastructure or dedicated IT support role to deliver quality support within a growth-oriented team.</p>
+            </div>
+
+        </div>
+
+        <footer class="site-footer">
+            <p>2026 | Built Jakie & Gemini</p>
+        </footer>
+
+    </div> 
+    
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+
+</body>
+</html>
